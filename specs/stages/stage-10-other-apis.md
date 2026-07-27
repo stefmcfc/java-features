@@ -12,7 +12,10 @@ Spring's modern client-side HTTP options.
 
 In: `uk.co.stefirby.java.features.httpclient`, plus wherever the `String`/`Files` examples
 land per the package layout (co-locate with an existing topic package if the
-spec doesn't call out a dedicated one).
+spec doesn't call out a dedicated one). The HttpClient/RestClient/
+`@HttpExchange` example methods take the base URI as a parameter rather than
+hardcoding `localhost`, so each stays runnable standalone from `main` against
+any running instance, not just a test-fixture one.
 
 ## Acceptance Criteria
 

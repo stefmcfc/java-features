@@ -5,7 +5,9 @@
 ## Goal
 
 Build the shared Premier League domain model and in-memory dataset that every
-later feature example queries against.
+later feature example queries against. `Player`, `Team`, and `Match` are
+implemented as Java records (16) — confirmed compatible with the Stream/
+Optional/Collections examples in later stages before committing to it further.
 
 ## Scope
 
@@ -17,13 +19,13 @@ Out: any feature example that consumes the dataset (stage 3+).
 ACs are in EARS format per `specs/ears-conventions.md`; `[AUTO]`/`[MANUAL]`
 marks the verification route.
 
-- [ ] `STAGE-2-AC-01` [AUTO] — The `data.Player` type shall expose name,
+- [ ] `STAGE-2-AC-01` [AUTO] — The `data.Player` record shall expose name,
       team, position, nationality, goals, assists, appearances, and
-      minutesPlayed.
-- [ ] `STAGE-2-AC-02` [AUTO] — The `data.Team` type shall expose name,
-      stadium, manager, and founded year.
-- [ ] `STAGE-2-AC-03` [AUTO] — The `data.Match` type shall expose homeTeam,
-      awayTeam, homeGoals, awayGoals, and date.
+      minutesPlayed as components.
+- [ ] `STAGE-2-AC-02` [AUTO] — The `data.Team` record shall expose name,
+      stadium, manager, and founded year as components.
+- [ ] `STAGE-2-AC-03` [AUTO] — The `data.Match` record shall expose homeTeam,
+      awayTeam, homeGoals, awayGoals, and date as components.
 - [ ] `STAGE-2-AC-04a` [AUTO] — `PremierLeagueDataBase.getAllPlayers()`,
       `getAllTeams()`, and `getAllMatches()` shall return non-empty lists
       backed purely by in-memory data — no I/O, no database.

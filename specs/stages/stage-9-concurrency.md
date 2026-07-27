@@ -10,7 +10,10 @@ payoff by running the Spring Boot HTTP layer itself on virtual threads.
 ## Scope
 
 In: `uk.co.stefirby.java.features.concurrency`, one thin controller in
-`uk.co.stefirby.java.features.api`.
+`uk.co.stefirby.java.features.api`. The structured-concurrency example is the
+only class in the project requiring `--enable-preview`; contain that flag's
+blast radius to just that one class (a dedicated Gradle source set or
+per-file compile task) rather than enabling preview features project-wide.
 
 ## Acceptance Criteria
 

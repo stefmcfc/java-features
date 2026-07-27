@@ -43,6 +43,12 @@ header naming the JDK version; each AC is verified by a passing Spock spec.
 - [ ] `STAGE-3-AC-07` [AUTO] — When the sequenced-collection stream view
       (21) example is invoked, it shall stream the teams via `reversed()`
       and return them last-to-first.
+- [ ] `STAGE-3-AC-08` [AUTO] — When the players-grouped-by-team example is
+      invoked, it shall group all PL players by team name via
+      `Collectors.groupingBy`, with each team's players collected into an
+      unmodifiable list via `Collectors.toUnmodifiableList()` (10), and
+      return a map keyed by team name — the endpoint stage 4's
+      `STAGE-4-AC-02` (`GET /api/streams/grouped-by-team`) delegates to.
 
 ## Definition of Done
 
