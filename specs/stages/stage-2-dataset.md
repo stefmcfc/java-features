@@ -19,22 +19,22 @@ Out: any feature example that consumes the dataset (stage 3+).
 ACs are in EARS format per `specs/ears-conventions.md`; `[AUTO]`/`[MANUAL]`
 marks the verification route.
 
-- [ ] `STAGE-2-AC-01` [AUTO] — The `data.Player` record shall expose name,
+- [x] `STAGE-2-AC-01` [AUTO] — The `data.Player` record shall expose name,
       team, position, nationality, goals, assists, appearances, and
       minutesPlayed as components.
-- [ ] `STAGE-2-AC-02` [AUTO] — The `data.Team` record shall expose name,
+- [x] `STAGE-2-AC-02` [AUTO] — The `data.Team` record shall expose name,
       stadium, manager, and founded year as components.
-- [ ] `STAGE-2-AC-03` [AUTO] — The `data.Match` record shall expose homeTeam,
+- [x] `STAGE-2-AC-03` [AUTO] — The `data.Match` record shall expose homeTeam,
       awayTeam, homeGoals, awayGoals, and date as components.
-- [ ] `STAGE-2-AC-04a` [AUTO] — `PremierLeagueDataBase.getAllPlayers()`,
+- [x] `STAGE-2-AC-04a` [AUTO] — `PremierLeagueDataBase.getAllPlayers()`,
       `getAllTeams()`, and `getAllMatches()` shall return non-empty lists
       backed purely by in-memory data — no I/O, no database.
-- [ ] `STAGE-2-AC-04b` [AUTO] — If a caller attempts to mutate a list
+- [x] `STAGE-2-AC-04b` [AUTO] — If a caller attempts to mutate a list
       returned by `PremierLeagueDataBase`, then the list shall throw
       `UnsupportedOperationException`.
-- [ ] `STAGE-2-AC-05` [AUTO] — Every `Player.team` and every `Match`
+- [x] `STAGE-2-AC-05` [AUTO] — Every `Player.team` and every `Match`
       home/away team shall match a team name present in `getAllTeams()`.
-- [ ] `STAGE-2-AC-06` [AUTO] — The dataset shall contain at least 4 teams
+- [x] `STAGE-2-AC-06` [AUTO] — The dataset shall contain at least 4 teams
       and at least 3 players per team, so grouping/sorting/comparison
       examples are meaningful rather than trivial.
 
