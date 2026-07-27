@@ -16,8 +16,14 @@ Requires JDK 21 to be resolvable via the configured Gradle toolchain
 
 ## Running Examples (CLI)
 
-Not yet applicable — no feature example classes exist until stage 2 onward.
-Each example, once added, exposes a `main` method runnable directly.
+Feature example classes land from stage 3 onward; each exposes a `main`
+method runnable directly. The stage-2 shared dataset already has one — to
+print a summary of the in-memory Premier League data:
+
+```
+./gradlew build
+java -cp build/classes/java/main uk.co.stefirby.java.features.data.PremierLeagueDataBase
+```
 
 ## Running the Spring Boot API
 

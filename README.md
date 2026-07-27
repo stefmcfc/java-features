@@ -41,13 +41,25 @@ uk.co.stefirby.java.features
 └── qAnda/               // Practice exercises, one per topic
 ```
 
-Each package currently holds only a `package-info.java` scaffold — real
-examples land stage by stage starting from `specs/stages/stage-2-dataset.md`.
+The `data/` package now carries the shared dataset (stage 2): `Player`,
+`Team`, and `Match` records plus `PremierLeagueDataBase`, whose static
+`getAllPlayers()`/`getAllTeams()`/`getAllMatches()` return immutable
+in-memory lists (6 teams, 22 players, 10 matches). Every other package
+still holds only a `package-info.java` scaffold — feature examples land
+from stage 3 onward.
 
 ## Running the Examples
 
-Not yet applicable — no feature examples exist until stage 2 onward. The
-minimal Spring Boot entry point is `uk.co.stefirby.java.features.JavaFeaturesApplication`.
+Feature examples arrive from stage 3 onward. The stage-2 dataset can be
+eyeballed via its `main` method:
+
+```
+./gradlew build
+java -cp build/classes/java/main uk.co.stefirby.java.features.data.PremierLeagueDataBase
+```
+
+The minimal Spring Boot entry point is
+`uk.co.stefirby.java.features.JavaFeaturesApplication`.
 
 ## Running the REST API
 
@@ -70,9 +82,15 @@ a later stage introduces real logic to measure (see `FUTURE-25`).
 
 ## Feature Coverage
 
-No feature examples yet — stage 1 only stands up the build/package
-scaffolding. See `specs/modern-java-features-spec.md` for the full coverage
-list this project works towards.
+- **Records (Java 16)** — `data.Player`, `data.Team`, and `data.Match`
+  model the shared dataset as records (stage 2). Dedicated record-feature
+  examples (compact constructors, record patterns, …) follow in a later
+  stage.
+- **Immutable collection factories (Java 9)** — `data.PremierLeagueDataBase`
+  builds its lists with `List.of`.
+
+See `specs/modern-java-features-spec.md` for the full coverage list this
+project works towards.
 
 ## Development Workflow
 
