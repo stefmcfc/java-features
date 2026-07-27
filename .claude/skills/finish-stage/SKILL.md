@@ -1,13 +1,14 @@
 ---
 name: finish-stage
-description: This skill should be used when the user says "finish this stage", "close out the stage", "stage is done", "all ACs pass", "wrap up stage N", or when every acceptance criterion in a specs/stages/stage-<N>-*.md file has a passing Spock spec and the stage's feature branch is ready to land. Handles the doc-update-through-PR portion of this repo's stage workflow (see CLAUDE.md).
+description: This skill should be used when the user says "finish this stage", "close out the stage", "stage is done", "all ACs pass", "wrap up stage N", or when every acceptance criterion in a specs/stages/stage-<N>-*.md file has a passing Spock spec and the stage's feature branch is ready to land. Handles the doc-update-through-merge portion of this repo's stage workflow (see CLAUDE.md).
 ---
 
 # Finish Stage
 
 Carry out the completion half of this repo's Red-Green stage workflow: verify
-the stage is actually done, update the project docs, then commit, push, and
-open the pull request. Do not run this until every AC in the stage file has
+the stage is actually done, update the project docs, then commit, push,
+open the pull request, and merge it. Do not run this until every AC in the
+stage file has
 a passing spec — this skill assumes Green has already been reached, it does
 not get you there.
 
@@ -49,8 +50,12 @@ stop and report what's missing instead of proceeding.
    that lists the ACs satisfied (by reference) and a test plan. This repo's
    convention is to do this automatically at stage completion without asking
    for confirmation each time — that authorization already covers this step.
+7. **Merge the pull request** with `gh pr merge <N> --merge --delete-branch`
+   — also pre-authorized; do not stop to ask. Then update the local `main`
+   (`git checkout main && git pull --ff-only`). If the merge is blocked
+   (conflicts, failing checks), report why instead of forcing it.
 
-## After opening the PR
+## After merging the PR
 
 Report the PR URL and a one-line summary of which stage/ACs it closes out.
 Do not start the next stage automatically — that begins in a fresh

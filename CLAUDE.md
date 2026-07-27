@@ -78,8 +78,11 @@ Sequence for a stage:
 5. Commit, push the branch, and open a pull request to `main` — this happens
    automatically at stage completion, without asking for confirmation each
    time (pre-authorized as part of this workflow).
+6. Merge the pull request (`gh pr merge --merge --delete-branch`) and update
+   the local `main` — equally pre-authorized; only stop if the merge is
+   blocked (conflicts, failing checks).
 
-Use the `finish-stage` skill to carry out steps 4–5 once a stage's ACs are
+Use the `finish-stage` skill to carry out steps 4–6 once a stage's ACs are
 verified green.
 
 ## Commit style
