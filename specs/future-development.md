@@ -33,8 +33,16 @@ same way stage ACs are.
 
 ## Java feature coverage (closing the 21 → 25 gap)
 
-The current coverage list mostly stops at Java 21; these are the headline
-additions between then and the Java 25 target:
+The project's language target is Java 21 for now (see the hard rule in
+`CLAUDE.md`) — deliberately, to de-risk Groovy/Spock compatibility on the
+newest JDKs before committing to it. These are the headline additions between
+21 and 25, gated behind bumping the target:
+
+- [ ] `FUTURE-24` — **Bump language target to Java 25.** Once Groovy/Spock
+      and Spring Boot's toolchain are confirmed compatible with JDK 25, raise
+      the Gradle toolchain (and the `CLAUDE.md` hard rule) from 21 to 25
+      project-wide, then land `FUTURE-04` through `FUTURE-11` below on top of
+      it.
 
 - [ ] `FUTURE-04` — **Stream Gatherers** (Java 24, JEP 485) — custom
       intermediate stream operations (`Gatherers.windowFixed`, `fold`,
@@ -108,7 +116,24 @@ straight into stages 9, 5, and 10 respectively — see `STAGE-9-AC-03`,
       something operational to document (which endpoints exist, what healthy
       looks like).
 
+## Package layout
+
+- [ ] `FUTURE-23` — **Dedicated `dates/` package.** An early draft of the main
+      spec called out a `dates/` package for `java.time` examples (match
+      dates, date-range filtering), mirrored from `java-8-master`, but it
+      never made it into the Proposed Package Layout or any stage. Promote if
+      a dedicated `java.time` feature set is wanted; until then, date-range
+      queries live wherever they naturally land (e.g. filtering `Match.date`
+      inside `streams/`).
+
 ## Tooling & quality
+
+- [ ] `FUTURE-25` — **Re-enable the JaCoCo coverage gate.** Stage 1 ships
+      with no coverage enforcement (`STAGE-1-AC-07`) since the only
+      production class at that point is the Spring Boot entrypoint, which has
+      no meaningful logic to measure. Wire JaCoCo verification back into
+      `./gradlew check` at CLAUDE.md's 90% line-coverage bar once a topic
+      package (stage 3 onward) has real logic to test against.
 
 - [ ] `FUTURE-13` — **CI with GitHub Actions** — run `./gradlew test` on every
       push/PR so the pre-commit hook isn't the only backstop.

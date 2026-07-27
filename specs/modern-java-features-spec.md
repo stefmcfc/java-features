@@ -2,7 +2,9 @@
 
 ## Purpose
 A personal-development companion project (same spirit as this `java-8-master` repo) that
-demonstrates key language and API features introduced from **Java 9 through Java 25**. Each
+demonstrates key language and API features introduced from **Java 9 through Java 21**, with
+Java 22–25 features layered in as a follow-on phase once `FUTURE-24` is picked up (see
+`specs/future-development.md`). Each
 feature gets a small, self-contained example — runnable standalone (a `main` method that prints
 to the console) — and select examples are also exposed as REST endpoints via Spring Boot so
 they can be called over HTTP, e.g. `GET /api/streams/top-scorers`.
@@ -29,7 +31,7 @@ Deferred ideas (including a future database-backed dataset) are tracked in
 `specs/future-development.md`.
 
 ## Conventions
-- **Spring version:** Use **Spring Boot 4.1.0 / Spring Framework 4-generation conventions**
+- **Spring version:** Use **Spring Boot 4.1.0 / Spring Framework 7-generation conventions**
   throughout — this is a hard rule, not a suggestion. Do **not** fall back to Spring Boot 3 /
   older Spring Framework idioms (e.g. old-style `WebMvcConfigurer` patterns, javax.* imports,
   outdated auto-configuration annotations) even if training data or habit suggests them. When in
@@ -37,7 +39,8 @@ Deferred ideas (including a future database-backed dataset) are tracked in
   writing Spring code.
 
 ## Tech Stack
-- **Language level:** Java 25 as the primary target.
+- **Language level:** Java 21 as the initial primary target; Java 25 is a planned
+  follow-on (`FUTURE-24`).
 - **Build tool:** Gradle (Kotlin DSL, `build.gradle.kts`).
 - **Framework:** Spring Boot 4.1.0, following Spring 4-generation conventions (see Conventions
   above) — used only to expose selected examples as REST endpoints, not as the core of the project.
@@ -90,14 +93,14 @@ relatable to iterate over in Stream/Optional examples.
 uk.co.stefirby.java.features.data
 ├── Player        // name, team, position, nationality, goals, assists, appearances, minutesPlayed
 ├── Team          // name, stadium, manager, founded year
-├── Match         // homeTeam, awayTeam, homeGoals, awayGoals, date (good for dates/ package too)
+├── Match         // homeTeam, awayTeam, homeGoals, awayGoals, date
 └── PremierLeagueDataBase   // static in-memory lists: getAllPlayers(), getAllTeams(), getAllMatches()
 ```
 
 This gives natural example queries throughout the project: top scorers (`sorted`/`Comparator`),
 players grouped by team or position (`Collectors.groupingBy`), average goals per team
 (`Collectors.averagingInt` / `teeing`), a team's top scorer as an `Optional<Player>`, match
-results filtered by date range (pairs well with the `dates/` package), etc.
+results filtered by date range, etc. (`FUTURE-23` tracks a dedicated `java.time` package if that grows into one.)
 
 ## Versioning Strategy
 Tag each example's Javadoc/comment header with the JDK version the feature shipped in, e.g.:

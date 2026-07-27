@@ -12,21 +12,27 @@ Ideas deferred beyond the current stages: `specs/future-development.md`.
 
 ## Hard rules
 
-- **Java 25** is the language target for all main/test sources.
-- **Spring Boot 4.1.0 / Spring Framework 4-generation conventions only.** Never
+- **Java 21** is the language target for all main/test sources for now — the
+  project's feature coverage stops at Java 21 until `FUTURE-24` (bump to
+  Java 25) is picked up; see `specs/future-development.md`.
+- **Spring Boot 4.1.0 / Spring Framework 7-generation conventions only.** Never
   fall back to Spring Boot 3 idioms (old-style `WebMvcConfigurer` patterns,
   `javax.*` imports, outdated auto-configuration annotations). When unsure,
   check current Spring Boot 4.1 docs/release notes before writing Spring code.
 - **No database/persistence layer.** The Premier League dataset stays in-memory.
 - **No UI/frontend.**
+- **No Lombok, no Gradle toolchain auto-provisioning/resolver plugins.**
+  Pure Java wherever possible; JDKs are installed and managed manually on the
+  dev machine, not auto-downloaded by the build.
 - Package layout follows `uk.co.stefirby.java.features.<topic>` (one package per feature area:
   `streams`, `collections`, `records`, `sealed`, `pattern_matching`,
   `switch_expressions`, `text_blocks`, `var`, `optional`, `concurrency`,
   `httpclient`, `data`, `api`, `qAnda`). See the spec for the full layout and
   rationale.
-- Every example class is written as static methods callable from three places:
-  a `main` method, a Spring controller in `api/`, and a Spock spec — controllers
-  stay thin and never contain feature logic.
+- Every example class exposes its feature logic as static methods, runnable
+  from a `main` method and covered by a Spock spec; selected examples are also
+  wired into a thin Spring controller in `api/` — controllers stay thin and
+  never contain feature logic.
 - Every example's Javadoc header states the JDK version the feature shipped in.
 
 ## Testing
@@ -40,8 +46,10 @@ Ideas deferred beyond the current stages: `specs/future-development.md`.
 - A pre-commit hook runs the test suite and blocks the commit if anything
   fails — this is a mechanical backstop, not a substitute for actually
   following Red-Green.
-- **Coverage: minimum 90% line coverage**, enforced by JaCoCo verification
-  as part of `./gradlew check`. Classes (or whole packages) with no
+- **Coverage gate is disabled for now** (`FUTURE-25`) — there's no meaningful
+  logic yet for JaCoCo to measure. Once topic packages carry real logic
+  (from stage 3 onward), re-enable JaCoCo verification in `./gradlew check`
+  at a minimum 90% line coverage. Classes (or whole packages) with no
   meaningful logic to test — custom exceptions, plain records/POJOs with
   nothing beyond their components/getters — may be excluded from
   measurement via an explicit exclusion list in `build.gradle.kts`. Never
