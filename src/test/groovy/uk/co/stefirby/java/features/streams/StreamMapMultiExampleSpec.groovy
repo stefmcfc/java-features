@@ -11,16 +11,18 @@ class StreamMapMultiExampleSpec extends Specification {
 
     def "STAGE-3-AC-02: playerNamesFlattenedFromTeams flattens every team into its players' names"() {
         given: "each team's players' names, in team order then player order"
-        def expected = PremierLeagueDataBase.getAllTeams().collectMany { team ->
-            PremierLeagueDataBase.getAllPlayers()
-                    .findAll { it.team() == team.name() }*.name()
-        }
+            def expected = PremierLeagueDataBase.getAllTeams().collectMany { team ->
+                PremierLeagueDataBase.getAllPlayers()
+                        .findAll { it.team() == team.name() }*.name()
+            }
 
-        when:
-        def result = StreamMapMultiExample.playerNamesFlattenedFromTeams()
+        when: "playerNamesFlattenedFromTeams is called"
+            def result = StreamMapMultiExample.playerNamesFlattenedFromTeams()
 
-        then:
-        result == expected
-        result.size() == PremierLeagueDataBase.getAllPlayers().size()
+        then: "the result matches the expected flattening"
+            result == expected
+
+        and: "every player is represented exactly once"
+            result.size() == PremierLeagueDataBase.getAllPlayers().size()
     }
 }

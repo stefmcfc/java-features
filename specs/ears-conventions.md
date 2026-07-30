@@ -30,6 +30,39 @@ simplest pattern that captures the requirement.
 
 A ubiquitous requirement typically becomes a `then:`/`expect:`-only spec.
 
+### Block labels
+
+Every `given`/`when`/`then`/`expect`/`and` block carries a string label
+describing that step in plain language — bare, unlabelled blocks aren't
+used. Where a block maps directly onto an EARS clause (see table above),
+the label echoes that clause's own wording, so the spec reads as the AC's
+sentence split across blocks:
+
+- `given "<state>":` — mirrors a While/Where clause, or states setup when
+  the AC has no explicit precondition.
+- `when "<trigger>":` — mirrors the When clause.
+- `then "<response>":` — mirrors the shall clause.
+- `and "<...>":` — a further assertion or action within the same phase;
+  label it independently rather than leaving it bare.
+- `expect "<response>":` — collapses when+then into one block for a direct,
+  side-effect-free assertion; still labelled.
+
+Code beneath a labelled block is indented one level deeper than the label,
+so the label reads as a heading for the statements under it:
+
+```groovy
+def "STAGE-N-AC-NN: <spec name>"() {
+    when: "GET /api/example is requested"
+        def response = client.get().uri("/api/example").exchange()
+
+    then: "the API responds 200"
+        response.expectStatus().isOk()
+
+    and: "the body is the stage-N example's result"
+        response.expectBody(String).isEqualTo(expected)
+}
+```
+
 ## Verification markers
 
 Every AC carries a marker immediately after its reference ID:

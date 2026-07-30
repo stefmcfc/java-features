@@ -10,10 +10,10 @@ import uk.co.stefirby.java.features.data.PremierLeagueDataBase
 class SequencedCollectionStreamExampleSpec extends Specification {
 
     def "STAGE-3-AC-07: teamsLastToFirst returns the teams in reverse dataset order"() {
-        when:
-        def result = SequencedCollectionStreamExample.teamsLastToFirst()
+        when: "teamsLastToFirst is called"
+            def result = SequencedCollectionStreamExample.teamsLastToFirst()
 
-        then:
-        result == PremierLeagueDataBase.getAllTeams().reverse()
+        then: "the result is the dataset's teams in reverse order"
+            result == PremierLeagueDataBase.getAllTeams().reverse()
     }
 }

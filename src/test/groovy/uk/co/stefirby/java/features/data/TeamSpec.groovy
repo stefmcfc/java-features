@@ -9,23 +9,23 @@ import spock.lang.Specification
 class TeamSpec extends Specification {
 
     def "Team is a record"() {
-        expect:
-        Team.isRecord()
+        expect: "Team is declared as a record"
+            Team.isRecord()
     }
 
     def "Team exposes the expected components in order"() {
-        expect:
-        Team.recordComponents*.name == ["name", "stadium", "manager", "founded"]
+        expect: "the record components are name, stadium, manager, founded"
+            Team.recordComponents*.name == ["name", "stadium", "manager", "founded"]
     }
 
     def "Team components are readable through their accessors"() {
-        given:
-        def team = new Team("Arsenal", "Emirates Stadium", "Mikel Arteta", 1886)
+        given: "a Team built from known values"
+            def team = new Team("Arsenal", "Emirates Stadium", "Mikel Arteta", 1886)
 
-        expect:
-        team.name() == "Arsenal"
-        team.stadium() == "Emirates Stadium"
-        team.manager() == "Mikel Arteta"
-        team.founded() == 1886
+        expect: "each accessor returns the value it was constructed with"
+            team.name() == "Arsenal"
+            team.stadium() == "Emirates Stadium"
+            team.manager() == "Mikel Arteta"
+            team.founded() == 1886
     }
 }

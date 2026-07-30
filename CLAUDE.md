@@ -39,6 +39,10 @@ Ideas deferred beyond the current stages: `specs/future-development.md`.
 
 - Spock (Groovy) specs under `src/test/groovy/...`, one `*Spec.groovy` per
   example class, mirroring the main package structure.
+- Every `given`/`when`/`then`/`expect`/`and` block is labelled with a string
+  describing that step, echoing the AC's own EARS wording where one applies,
+  and code beneath a label is indented one level deeper than the label —
+  see "Block labels" in `specs/ears-conventions.md`.
 - **Red-Green TDD is mandatory.** For every stage: write the failing specs
   first (Red), confirm they fail for the right reason, then implement until
   they pass (Green). Never write implementation code before its failing test

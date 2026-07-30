@@ -11,16 +11,16 @@ import uk.co.stefirby.java.features.data.PremierLeagueDataBase
 class CollectorsTeeingExampleSpec extends Specification {
 
     def "STAGE-3-AC-03: leagueGoalStats returns total and average goals together"() {
-        given:
-        def players = PremierLeagueDataBase.getAllPlayers()
-        def expectedTotal = players.sum { it.goals() }
-        def expectedAverage = expectedTotal / (double) players.size()
+        given: "the total and average goals computed directly from the dataset"
+            def players = PremierLeagueDataBase.getAllPlayers()
+            def expectedTotal = players.sum { it.goals() }
+            def expectedAverage = expectedTotal / (double) players.size()
 
-        when:
-        def stats = CollectorsTeeingExample.leagueGoalStats()
+        when: "leagueGoalStats is called"
+            def stats = CollectorsTeeingExample.leagueGoalStats()
 
-        then:
-        stats.totalGoals() == expectedTotal
-        Math.abs(stats.averageGoalsPerPlayer() - expectedAverage) < 1e-9
+        then: "both totals match the direct computation"
+            stats.totalGoals() == expectedTotal
+            Math.abs(stats.averageGoalsPerPlayer() - expectedAverage) < 1e-9
     }
 }

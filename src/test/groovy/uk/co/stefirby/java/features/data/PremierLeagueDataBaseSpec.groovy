@@ -17,66 +17,66 @@ import spock.lang.Specification
 class PremierLeagueDataBaseSpec extends Specification {
 
     def "STAGE-2-AC-04a: #accessor returns a non-empty list"() {
-        expect:
-        !list.isEmpty()
+        expect: "the accessor's result is not empty"
+            !list.isEmpty()
 
         where:
-        accessor          | list
-        "getAllPlayers()" | PremierLeagueDataBase.getAllPlayers()
-        "getAllTeams()"   | PremierLeagueDataBase.getAllTeams()
-        "getAllMatches()" | PremierLeagueDataBase.getAllMatches()
+            accessor          | list
+            "getAllPlayers()" | PremierLeagueDataBase.getAllPlayers()
+            "getAllTeams()"   | PremierLeagueDataBase.getAllTeams()
+            "getAllMatches()" | PremierLeagueDataBase.getAllMatches()
     }
 
     def "STAGE-2-AC-04b: mutating the list from #accessor throws UnsupportedOperationException"() {
-        when:
-        list.remove(0)
+        when: "an element is removed"
+            list.remove(0)
 
-        then:
-        thrown(UnsupportedOperationException)
+        then: "the list rejects the mutation"
+            thrown(UnsupportedOperationException)
 
-        when:
-        list.add(null)
+        when: "an element is added"
+            list.add(null)
 
-        then:
-        thrown(UnsupportedOperationException)
+        then: "the list rejects the mutation"
+            thrown(UnsupportedOperationException)
 
         where:
-        accessor          | list
-        "getAllPlayers()" | PremierLeagueDataBase.getAllPlayers()
-        "getAllTeams()"   | PremierLeagueDataBase.getAllTeams()
-        "getAllMatches()" | PremierLeagueDataBase.getAllMatches()
+            accessor          | list
+            "getAllPlayers()" | PremierLeagueDataBase.getAllPlayers()
+            "getAllTeams()"   | PremierLeagueDataBase.getAllTeams()
+            "getAllMatches()" | PremierLeagueDataBase.getAllMatches()
     }
 
     def "STAGE-2-AC-05: every player's team is a known team"() {
-        given:
-        def teamNames = PremierLeagueDataBase.getAllTeams()*.name() as Set
+        given: "the set of known team names"
+            def teamNames = PremierLeagueDataBase.getAllTeams()*.name() as Set
 
-        expect:
-        PremierLeagueDataBase.getAllPlayers().every { it.team() in teamNames }
+        expect: "every player's team is in that set"
+            PremierLeagueDataBase.getAllPlayers().every { it.team() in teamNames }
     }
 
     def "STAGE-2-AC-05: every match's home and away teams are known teams"() {
-        given:
-        def teamNames = PremierLeagueDataBase.getAllTeams()*.name() as Set
+        given: "the set of known team names"
+            def teamNames = PremierLeagueDataBase.getAllTeams()*.name() as Set
 
-        expect:
-        PremierLeagueDataBase.getAllMatches().every {
-            it.homeTeam() in teamNames && it.awayTeam() in teamNames
-        }
+        expect: "every match's home and away teams are in that set"
+            PremierLeagueDataBase.getAllMatches().every {
+                it.homeTeam() in teamNames && it.awayTeam() in teamNames
+            }
     }
 
     def "STAGE-2-AC-06: dataset has at least 4 teams"() {
-        expect:
-        PremierLeagueDataBase.getAllTeams().size() >= 4
+        expect: "getAllTeams() has at least 4 entries"
+            PremierLeagueDataBase.getAllTeams().size() >= 4
     }
 
     def "STAGE-2-AC-06: every team has at least 3 players"() {
-        given:
-        def playersByTeam = PremierLeagueDataBase.getAllPlayers().groupBy { it.team() }
+        given: "players grouped by team"
+            def playersByTeam = PremierLeagueDataBase.getAllPlayers().groupBy { it.team() }
 
-        expect:
-        PremierLeagueDataBase.getAllTeams().every { team ->
-            (playersByTeam[team.name()] ?: []).size() >= 3
-        }
+        expect: "every team has at least 3 players in that grouping"
+            PremierLeagueDataBase.getAllTeams().every { team ->
+                (playersByTeam[team.name()] ?: []).size() >= 3
+            }
     }
 }
