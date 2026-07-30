@@ -134,8 +134,8 @@ straight into stages 9, 5, and 10 respectively — see `STAGE-9-AC-03`,
 
 - [ ] `FUTURE-23` — **Dedicated `dates/` package.** An early draft of the main
       spec called out a `dates/` package for `java.time` examples (match
-      dates, date-range filtering), mirrored from `java-8-master`, but it
-      never made it into the Proposed Package Layout or any stage. Promote if
+      dates, date-range filtering), but it never made it into the Proposed
+      Package Layout or any stage. Promote if
       a dedicated `java.time` feature set is wanted; until then, date-range
       queries live wherever they naturally land (e.g. filtering `Match.date`
       inside `streams/`).

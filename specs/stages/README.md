@@ -12,12 +12,12 @@ once their spec passes.
 
 | Stage | Slug | Status |
 |---|---|---|
-| 1 | [scaffolding](stage-1-scaffolding.md) | Not started |
-| 2 | [dataset](stage-2-dataset.md) | Not started |
-| 3 | [streams](stage-3-streams.md) | Not started |
-| 4 | [api-layer](stage-4-api-layer.md) | Not started |
-| 5 | [optional](stage-5-optional.md) | Not started |
-| 6 | [collections](stage-6-collections.md) | Not started |
+| 1 | [scaffolding](stage-1-scaffolding.md) | Complete |
+| 2 | [dataset](stage-2-dataset.md) | Complete |
+| 3 | [streams](stage-3-streams.md) | Complete |
+| 4 | [api-layer](stage-4-api-layer.md) | Complete |
+| 5 | [optional](stage-5-optional.md) | Complete |
+| 6 | [collections](stage-6-collections.md) | Complete |
 | 7 | [records-and-basics](stage-7-records-and-basics.md) | Not started |
 | 8 | [sealed-and-pattern-matching](stage-8-sealed-and-pattern-matching.md) | Not started |
 | 9 | [concurrency](stage-9-concurrency.md) | Not started |

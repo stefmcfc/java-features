@@ -1,7 +1,7 @@
 # Modern Java Features — Learning Project Spec
 
 ## Purpose
-A personal-development companion project (same spirit as this `java-8-master` repo) that
+A personal-development project that
 demonstrates key language and API features introduced from **Java 9 through Java 21**, with
 Java 22–25 features layered in as a follow-on phase once `FUTURE-24` is picked up (see
 `specs/future-development.md`). Each
@@ -86,8 +86,7 @@ current conventions for routing/config (see Conventions section) rather than pat
 over from Spring Boot 3.
 
 ## Shared Dataset: Premier League Stats
-Replaces the `Student`/`StudentDataBase` model from `java-8-master` with something more
-relatable to iterate over in Stream/Optional examples.
+A domain model that's relatable to iterate over in Stream/Optional examples.
 
 ```
 uk.co.stefirby.java.features.data
@@ -152,7 +151,7 @@ JDK release.
 - `Files.readString()` / `writeString()` (11)
 
 ## Example Format Convention
-Keep the same lightweight style as `java-8-master`:
+Keep a lightweight style:
 ```java
 package uk.co.stefirby.java.features.streams;
 
