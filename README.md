@@ -45,9 +45,12 @@ The `data/` package carries the shared dataset (stage 2): `Player`,
 `Team`, and `Match` records plus `PremierLeagueDataBase`, whose static
 `getAllPlayers()`/`getAllTeams()`/`getAllMatches()` return immutable
 in-memory lists (6 teams, 22 players, 10 matches). The `streams/` package
-carries the stage-3 examples (see Feature Coverage below); the remaining
-packages still hold only a `package-info.java` scaffold and fill in over
-the later stages.
+carries the stage-3 examples (see Feature Coverage below). The `api/`
+package carries the stage-4 REST layer: `StreamsController` exposes
+`GET /api/streams/top-scorers` and `GET /api/streams/grouped-by-team`,
+delegating straight to the stage-3 static methods. The remaining packages
+still hold only a `package-info.java` scaffold and fill in over the later
+stages.
 
 ## Running the Examples
 
@@ -69,8 +72,13 @@ The minimal Spring Boot entry point is
 ./gradlew bootRun
 ```
 
-Boots the (currently empty) Spring Boot 4.1 application context. No
-endpoints are wired up yet.
+Boots the Spring Boot 4.1 application on port 8080. Stage 4 wires up:
+
+- `GET /api/streams/top-scorers`
+- `GET /api/streams/grouped-by-team`
+- `GET /v3/api-docs` — the generated OpenAPI 3.x document (via
+  springdoc-openapi), which tracks every controller in `api/` automatically
+- `/swagger-ui/index.html` — the Swagger UI over that document
 
 ## Testing
 
@@ -113,6 +121,15 @@ a later stage introduces real logic to measure (see `FUTURE-25`).
   stage.
 - **Immutable collection factories (Java 9)** — `data.PremierLeagueDataBase`
   builds its lists with `List.of`.
+
+**API layer (stage 4, proof of concept)** — thin controllers in `api/`
+exposing selected stage-3 examples over HTTP, documented via
+springdoc-openapi:
+
+- **`StreamsController`** — `GET /api/streams/top-scorers` and
+  `GET /api/streams/grouped-by-team`, delegating straight to
+  `StreamToListExample`/`CollectorsGroupingByExample`. No feature logic of
+  its own (thin-controller rule).
 
 See `specs/modern-java-features-spec.md` for the full coverage list this
 project works towards.
