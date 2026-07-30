@@ -18,7 +18,7 @@ once their spec passes.
 | 4 | [api-layer](stage-4-api-layer.md) | Complete |
 | 5 | [optional](stage-5-optional.md) | Complete |
 | 6 | [collections](stage-6-collections.md) | Complete |
-| 7 | [records-and-basics](stage-7-records-and-basics.md) | Not started |
+| 7 | [records-and-basics](stage-7-records-and-basics.md) | Complete |
 | 8 | [sealed-and-pattern-matching](stage-8-sealed-and-pattern-matching.md) | Not started |
 | 9 | [concurrency](stage-9-concurrency.md) | Not started |
 | 10 | [other-apis](stage-10-other-apis.md) | Not started |

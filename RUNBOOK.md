@@ -38,6 +38,10 @@ Stage 5 added the `optional/` examples: `OptionalOrExample`,
 Stage 6 added the `collections/` examples: `ImmutableFactoriesExample` and
 `SequencedCollectionsExample`.
 
+Stage 7 added the `var/`, `text_blocks/`, and `records/` examples:
+`VarLocalInferenceExample`, `MatchdayReportExample`, and
+`PlayerSummaryExample`.
+
 ## Running the Spring Boot API
 
 ```
@@ -67,6 +71,16 @@ responds 200 with that team's top scorer as JSON; an unknown team responds
 `spring.mvc.problemdetails.enabled=true` in `application.properties`, so an
 unhandled `ResponseStatusException` renders as a standard problem-details
 document rather than Boot's default error page.
+
+Stage 7 added `api.RecordsController`:
+
+```
+GET /api/records/player/{id}
+```
+
+Delegates straight to `PlayerSummaryExample.findById()`. A known id responds
+200 with that player as a `PlayerSummary` record DTO; an unknown id responds
+404 with an RFC 9457 `ProblemDetail` body.
 
 springdoc-openapi is wired in alongside them, so the API is self-documenting:
 
