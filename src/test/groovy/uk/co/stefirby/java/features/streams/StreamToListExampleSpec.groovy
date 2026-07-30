@@ -11,32 +11,32 @@ import uk.co.stefirby.java.features.data.PremierLeagueDataBase
 class StreamToListExampleSpec extends Specification {
 
     def "STAGE-3-AC-01: topScorerNames returns every player's name sorted by goals descending"() {
-        given:
-        def expected = PremierLeagueDataBase.getAllPlayers()
-                .toSorted { a, b -> b.goals() <=> a.goals() }*.name()
+        given: "every player's name sorted by goals descending, computed directly"
+            def expected = PremierLeagueDataBase.getAllPlayers()
+                    .toSorted { a, b -> b.goals() <=> a.goals() }*.name()
 
-        when:
-        def result = StreamToListExample.topScorerNames()
+        when: "topScorerNames is called"
+            def result = StreamToListExample.topScorerNames()
 
-        then:
-        result == expected
-        result.first() == "Mohamed Salah"
+        then: "the result matches the direct sort, led by the top scorer"
+            result == expected
+            result.first() == "Mohamed Salah"
     }
 
     def "STAGE-3-AC-01: mutating the returned list throws UnsupportedOperationException"() {
-        given:
-        def result = StreamToListExample.topScorerNames()
+        given: "the result of topScorerNames"
+            def result = StreamToListExample.topScorerNames()
 
-        when:
-        result.add("Alan Shearer")
+        when: "an element is added"
+            result.add("Alan Shearer")
 
-        then:
-        thrown(UnsupportedOperationException)
+        then: "the list rejects the mutation"
+            thrown(UnsupportedOperationException)
 
-        when:
-        result.remove(0)
+        when: "an element is removed"
+            result.remove(0)
 
-        then:
-        thrown(UnsupportedOperationException)
+        then: "the list rejects the mutation"
+            thrown(UnsupportedOperationException)
     }
 }

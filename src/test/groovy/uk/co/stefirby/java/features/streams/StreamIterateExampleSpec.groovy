@@ -10,10 +10,10 @@ import spock.lang.Specification
 class StreamIterateExampleSpec extends Specification {
 
     def "STAGE-3-AC-05: matchweekNumbers generates 1 through 38"() {
-        when:
-        def result = StreamIterateExample.matchweekNumbers()
+        when: "matchweekNumbers is called"
+            def result = StreamIterateExample.matchweekNumbers()
 
-        then:
-        result == (1..38).toList()
+        then: "the result is 1 through 38 in order"
+            result == (1..38).toList()
     }
 }

@@ -26,16 +26,16 @@ class PackageScaffoldingSpec extends Specification {
     ]
 
     def "package #topicPackage exists with a package-info.java"() {
-        given:
-        def basePackageDir = new File("src/main/java/uk/co/stefirby/java/features")
-        def packageDir = new File(basePackageDir, topicPackage)
-        def packageInfo = new File(packageDir, "package-info.java")
+        given: "the topic package's directory and package-info.java file"
+            def basePackageDir = new File("src/main/java/uk/co/stefirby/java/features")
+            def packageDir = new File(basePackageDir, topicPackage)
+            def packageInfo = new File(packageDir, "package-info.java")
 
-        expect:
-        packageDir.isDirectory()
-        packageInfo.isFile()
+        expect: "both the directory and the package-info.java file exist"
+            packageDir.isDirectory()
+            packageInfo.isFile()
 
         where:
-        topicPackage << TOPIC_PACKAGES
+            topicPackage << TOPIC_PACKAGES
     }
 }

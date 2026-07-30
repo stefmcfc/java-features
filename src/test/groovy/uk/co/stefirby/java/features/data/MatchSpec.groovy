@@ -11,27 +11,27 @@ import java.time.LocalDate
 class MatchSpec extends Specification {
 
     def "Match is a record"() {
-        expect:
-        Match.isRecord()
+        expect: "Match is declared as a record"
+            Match.isRecord()
     }
 
     def "Match exposes the expected components in order"() {
-        expect:
-        Match.recordComponents*.name == [
-                "homeTeam", "awayTeam", "homeGoals", "awayGoals", "date",
-        ]
+        expect: "the record components are homeTeam, awayTeam, homeGoals, awayGoals, date"
+            Match.recordComponents*.name == [
+                    "homeTeam", "awayTeam", "homeGoals", "awayGoals", "date",
+            ]
     }
 
     def "Match components are readable through their accessors"() {
-        given:
-        def match = new Match("Liverpool", "Arsenal", 2, 1,
-                LocalDate.of(2025, 8, 17))
+        given: "a Match built from known values"
+            def match = new Match("Liverpool", "Arsenal", 2, 1,
+                    LocalDate.of(2025, 8, 17))
 
-        expect:
-        match.homeTeam() == "Liverpool"
-        match.awayTeam() == "Arsenal"
-        match.homeGoals() == 2
-        match.awayGoals() == 1
-        match.date() == LocalDate.of(2025, 8, 17)
+        expect: "each accessor returns the value it was constructed with"
+            match.homeTeam() == "Liverpool"
+            match.awayTeam() == "Arsenal"
+            match.homeGoals() == 2
+            match.awayGoals() == 1
+            match.date() == LocalDate.of(2025, 8, 17)
     }
 }

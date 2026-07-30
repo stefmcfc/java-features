@@ -12,24 +12,24 @@ import uk.co.stefirby.java.features.data.PremierLeagueDataBase
 class CollectorsGroupingByExampleSpec extends Specification {
 
     def "STAGE-3-AC-08: playersGroupedByTeam groups every player under its team name"() {
-        given:
-        def expected = PremierLeagueDataBase.getAllPlayers().groupBy { it.team() }
+        given: "every player grouped by team name via the dataset directly"
+            def expected = PremierLeagueDataBase.getAllPlayers().groupBy { it.team() }
 
-        when:
-        def result = CollectorsGroupingByExample.playersGroupedByTeam()
+        when: "playersGroupedByTeam is called"
+            def result = CollectorsGroupingByExample.playersGroupedByTeam()
 
-        then:
-        result == expected
+        then: "the result matches the direct grouping"
+            result == expected
     }
 
     def "STAGE-3-AC-08: each team's list of players is unmodifiable"() {
-        given:
-        def result = CollectorsGroupingByExample.playersGroupedByTeam()
+        given: "the grouped result"
+            def result = CollectorsGroupingByExample.playersGroupedByTeam()
 
-        when:
-        result["Arsenal"].remove(0)
+        when: "a team's player list is mutated"
+            result["Arsenal"].remove(0)
 
-        then:
-        thrown(UnsupportedOperationException)
+        then: "the list rejects the mutation"
+            thrown(UnsupportedOperationException)
     }
 }

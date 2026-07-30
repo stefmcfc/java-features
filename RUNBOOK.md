@@ -31,6 +31,10 @@ Stage 3 added the `streams/` examples: `StreamToListExample`,
 `StreamOfNullableExample`, `SequencedCollectionStreamExample`, and
 `CollectorsGroupingByExample`.
 
+Stage 5 added the `optional/` examples: `OptionalOrExample`,
+`OptionalIfPresentOrElseExample`, `OptionalIsEmptyExample`, and
+`OptionalStreamExample`.
+
 ## Running the Spring Boot API
 
 ```
@@ -47,6 +51,19 @@ GET /api/streams/grouped-by-team
 
 Both delegate straight to the stage-3 static methods (`StreamToListExample`,
 `CollectorsGroupingByExample`) — no logic lives in the controller.
+
+Stage 5 added `api.OptionalController`:
+
+```
+GET /api/optional/team-top-scorer?team=<name>
+```
+
+Delegates straight to `OptionalOrExample.topScorerOfTeam()`. A known team
+responds 200 with that team's top scorer as JSON; an unknown team responds
+404 with an RFC 9457 `ProblemDetail` body — enabled via
+`spring.mvc.problemdetails.enabled=true` in `application.properties`, so an
+unhandled `ResponseStatusException` renders as a standard problem-details
+document rather than Boot's default error page.
 
 springdoc-openapi is wired in alongside them, so the API is self-documenting:
 

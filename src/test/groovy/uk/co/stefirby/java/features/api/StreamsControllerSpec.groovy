@@ -24,28 +24,28 @@ class StreamsControllerSpec extends Specification {
     RestTestClient client
 
     def "STAGE-4-AC-01: GET /api/streams/top-scorers responds 200 with the stage-3 top-scorers result"() {
-        given:
-        def expected = StreamToListExample.topScorerNames()
+        given: "the stage-3 top-scorers result"
+            def expected = StreamToListExample.topScorerNames()
 
-        expect:
-        client.get()
-                .uri("/api/streams/top-scorers")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(new ParameterizedTypeReference<List<String>>() {})
-                .isEqualTo(expected)
+        expect: "GET /api/streams/top-scorers responds 200 with that same result as JSON"
+            client.get()
+                    .uri("/api/streams/top-scorers")
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectBody(new ParameterizedTypeReference<List<String>>() {})
+                    .isEqualTo(expected)
     }
 
     def "STAGE-4-AC-02: GET /api/streams/grouped-by-team responds 200 with the stage-3 grouped-by-team result"() {
-        given:
-        def expected = CollectorsGroupingByExample.playersGroupedByTeam()
+        given: "the stage-3 grouped-by-team result"
+            def expected = CollectorsGroupingByExample.playersGroupedByTeam()
 
-        expect:
-        client.get()
-                .uri("/api/streams/grouped-by-team")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(new ParameterizedTypeReference<Map<String, List<Player>>>() {})
-                .isEqualTo(expected)
+        expect: "GET /api/streams/grouped-by-team responds 200 with that same result as JSON"
+            client.get()
+                    .uri("/api/streams/grouped-by-team")
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectBody(new ParameterizedTypeReference<Map<String, List<Player>>>() {})
+                    .isEqualTo(expected)
     }
 }

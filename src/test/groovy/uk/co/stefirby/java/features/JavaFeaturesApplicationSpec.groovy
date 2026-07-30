@@ -16,12 +16,12 @@ class JavaFeaturesApplicationSpec extends Specification {
     ApplicationContext applicationContext
 
     def "test JVM reports feature version 21"() {
-        expect:
-        Runtime.version().feature() == 21
+        expect: "Runtime.version() reports feature 21"
+            Runtime.version().feature() == 21
     }
 
     def "application context loads"() {
-        expect:
-        applicationContext != null
+        expect: "the Spring application context is not null"
+            applicationContext != null
     }
 }

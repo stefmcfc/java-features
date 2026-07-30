@@ -45,12 +45,14 @@ The `data/` package carries the shared dataset (stage 2): `Player`,
 `Team`, and `Match` records plus `PremierLeagueDataBase`, whose static
 `getAllPlayers()`/`getAllTeams()`/`getAllMatches()` return immutable
 in-memory lists (6 teams, 22 players, 10 matches). The `streams/` package
-carries the stage-3 examples (see Feature Coverage below). The `api/`
-package carries the stage-4 REST layer: `StreamsController` exposes
-`GET /api/streams/top-scorers` and `GET /api/streams/grouped-by-team`,
-delegating straight to the stage-3 static methods. The remaining packages
-still hold only a `package-info.java` scaffold and fill in over the later
-stages.
+carries the stage-3 examples (see Feature Coverage below). The `optional/`
+package carries the stage-5 `java.util.Optional` examples. The `api/`
+package carries the REST layer: `StreamsController` (stage 4) exposes
+`GET /api/streams/top-scorers` and `GET /api/streams/grouped-by-team`;
+`OptionalController` (stage 5) exposes `GET /api/optional/team-top-scorer`.
+Every handler delegates straight to a static method in the matching topic
+package. The remaining packages still hold only a `package-info.java`
+scaffold and fill in over the later stages.
 
 ## Running the Examples
 
@@ -79,6 +81,12 @@ Boots the Spring Boot 4.1 application on port 8080. Stage 4 wires up:
 - `GET /v3/api-docs` — the generated OpenAPI 3.x document (via
   springdoc-openapi), which tracks every controller in `api/` automatically
 - `/swagger-ui/index.html` — the Swagger UI over that document
+
+Stage 5 adds:
+
+- `GET /api/optional/team-top-scorer?team=<name>` — 200 with that team's top
+  scorer as JSON, or 404 with an RFC 9457 `ProblemDetail` body for an
+  unknown team
 
 ## Testing
 
@@ -122,14 +130,28 @@ a later stage introduces real logic to measure (see `FUTURE-25`).
 - **Immutable collection factories (Java 9)** — `data.PremierLeagueDataBase`
   builds its lists with `List.of`.
 
-**API layer (stage 4, proof of concept)** — thin controllers in `api/`
-exposing selected stage-3 examples over HTTP, documented via
-springdoc-openapi:
+**Optional (stage 5)** — one example class per feature in `optional/`,
+against `Optional<Player>` lookups over the shared dataset:
 
-- **`StreamsController`** — `GET /api/streams/top-scorers` and
+- **`Optional.or()` (Java 9)** — `OptionalOrExample`: a team with no top
+  scorer of its own falls back to the league-wide top scorer.
+- **`Optional.ifPresentOrElse()` (Java 9)** — `OptionalIfPresentOrElseExample`:
+  runs a present action for a known player, an empty action otherwise.
+- **`Optional.isEmpty()` (Java 11)** — `OptionalIsEmptyExample`: direct
+  emptiness check for whether a team has a top scorer.
+- **`Optional.stream()` (Java 9)** — `OptionalStreamExample`: flattens
+  several teams' top-scorer lookups, dropping the empties.
+
+**API layer** — thin controllers in `api/` exposing selected examples over
+HTTP, documented via springdoc-openapi:
+
+- **`StreamsController`** (stage 4) — `GET /api/streams/top-scorers` and
   `GET /api/streams/grouped-by-team`, delegating straight to
   `StreamToListExample`/`CollectorsGroupingByExample`. No feature logic of
   its own (thin-controller rule).
+- **`OptionalController`** (stage 5) — `GET /api/optional/team-top-scorer`,
+  delegating straight to `OptionalOrExample.topScorerOfTeam()` and mapping
+  an absent result to a 404 `ProblemDetail`.
 
 See `specs/modern-java-features-spec.md` for the full coverage list this
 project works towards.

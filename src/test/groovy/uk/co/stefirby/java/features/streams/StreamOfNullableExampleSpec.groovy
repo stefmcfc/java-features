@@ -10,16 +10,16 @@ import spock.lang.Specification
 class StreamOfNullableExampleSpec extends Specification {
 
     def "STAGE-3-AC-06: an unknown player name yields an empty stream"() {
-        expect:
-        StreamOfNullableExample.lookupAsStream("Alan Shearer").toList().isEmpty()
+        expect: "lookupAsStream toList is empty for an unknown name"
+            StreamOfNullableExample.lookupAsStream("Alan Shearer").toList().isEmpty()
     }
 
     def "STAGE-3-AC-06: a known player name yields exactly that one player"() {
-        when:
-        def result = StreamOfNullableExample.lookupAsStream("Mohamed Salah").toList()
+        when: "lookupAsStream is called with a known name"
+            def result = StreamOfNullableExample.lookupAsStream("Mohamed Salah").toList()
 
-        then:
-        result.size() == 1
-        result.first().name() == "Mohamed Salah"
+        then: "the result is exactly that one player"
+            result.size() == 1
+            result.first().name() == "Mohamed Salah"
     }
 }
