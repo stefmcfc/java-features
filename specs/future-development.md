@@ -86,6 +86,20 @@ newest JDKs before committing to it. These are the headline additions between
       integration specs keep passing unchanged. Add specs for both states:
       endpoints open when disabled, 401 without credentials when enabled.
 
+## Example execution model
+
+- [ ] `FUTURE-26` — **Retire the per-class `main` method.** Every example
+      class currently ships a `public static void main` per `CLAUDE.md`/the
+      spec's Example Format Convention, so it's runnable standalone from the
+      console. Once the Spock suite and the `api/` layer are mature enough to
+      be the primary way examples get exercised, consider dropping `main` in
+      favour of running examples via their spec or a dedicated API call, with
+      any demo output routed through logging at a level controlled by
+      `application.yml`/an environment variable rather than
+      `System.out.println`. *Conflicts with the "runnable from a `main`
+      method" hard rule in `CLAUDE.md` and the spec's Example Format
+      Convention — revise both if this is picked up.*
+
 ## Spring Boot 4 / Framework 7 features
 
 Same rationale as the Java 22–25 gap above: the project mandates Boot 4.1
