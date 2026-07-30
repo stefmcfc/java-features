@@ -45,8 +45,9 @@ The `data/` package carries the shared dataset (stage 2): `Player`,
 `Team`, and `Match` records plus `PremierLeagueDataBase`, whose static
 `getAllPlayers()`/`getAllTeams()`/`getAllMatches()` return immutable
 in-memory lists (6 teams, 22 players, 10 matches). The `streams/` package
-carries the stage-3 examples (see Feature Coverage below). The `optional/`
-package carries the stage-5 `java.util.Optional` examples. The `api/`
+carries the stage-3 examples (see Feature Coverage below). The
+`collections/` package carries the stage-6 collection-API examples. The
+`optional/` package carries the stage-5 `java.util.Optional` examples. The `api/`
 package carries the REST layer: `StreamsController` (stage 4) exposes
 `GET /api/streams/top-scorers` and `GET /api/streams/grouped-by-team`;
 `OptionalController` (stage 5) exposes `GET /api/optional/team-top-scorer`.
@@ -120,6 +121,16 @@ a later stage introduces real logic to measure (see `FUTURE-25`).
 - **`Collectors.toUnmodifiableList()` (Java 10)** —
   `CollectorsGroupingByExample`: players grouped by team into unmodifiable
   lists (backs stage 4's `GET /api/streams/grouped-by-team`).
+
+**Collections (stage 6)** — one example class per feature in `collections/`:
+
+- **Immutable collection factories (Java 9)** — `ImmutableFactoriesExample`:
+  the league's top three scorers built as `List.of()`, `Set.of()`, and
+  `Map.of()` collections, each rejecting mutation with
+  `UnsupportedOperationException`.
+- **Sequenced Collections (Java 21)** — `SequencedCollectionsExample`: the
+  season's matches ordered by date, with `getFirst()`, `getLast()`, and a
+  `reversed()` view.
 
 **Other**
 

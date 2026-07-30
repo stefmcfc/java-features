@@ -35,6 +35,9 @@ Stage 5 added the `optional/` examples: `OptionalOrExample`,
 `OptionalIfPresentOrElseExample`, `OptionalIsEmptyExample`, and
 `OptionalStreamExample`.
 
+Stage 6 added the `collections/` examples: `ImmutableFactoriesExample` and
+`SequencedCollectionsExample`.
+
 ## Running the Spring Boot API
 
 ```
