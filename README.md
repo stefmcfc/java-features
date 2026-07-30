@@ -41,20 +41,22 @@ uk.co.stefirby.java.features
 └── qAnda/               // Practice exercises, one per topic
 ```
 
-The `data/` package now carries the shared dataset (stage 2): `Player`,
+The `data/` package carries the shared dataset (stage 2): `Player`,
 `Team`, and `Match` records plus `PremierLeagueDataBase`, whose static
 `getAllPlayers()`/`getAllTeams()`/`getAllMatches()` return immutable
-in-memory lists (6 teams, 22 players, 10 matches). Every other package
-still holds only a `package-info.java` scaffold — feature examples land
-from stage 3 onward.
+in-memory lists (6 teams, 22 players, 10 matches). The `streams/` package
+carries the stage-3 examples (see Feature Coverage below); the remaining
+packages still hold only a `package-info.java` scaffold and fill in over
+the later stages.
 
 ## Running the Examples
 
-Feature examples arrive from stage 3 onward. The stage-2 dataset can be
-eyeballed via its `main` method:
+Every example class has a `main` method printing its result. Build once,
+then run any class directly, e.g.:
 
 ```
 ./gradlew build
+java -cp build/classes/java/main uk.co.stefirby.java.features.streams.StreamToListExample
 java -cp build/classes/java/main uk.co.stefirby.java.features.data.PremierLeagueDataBase
 ```
 
@@ -81,6 +83,29 @@ per example class. The JaCoCo coverage gate is intentionally disabled until
 a later stage introduces real logic to measure (see `FUTURE-25`).
 
 ## Feature Coverage
+
+**Streams (stage 3, headline focus)** — one example class per feature in
+`streams/`:
+
+- **`Stream.toList()` (Java 16)** — `StreamToListExample`: players' names by
+  goals descending, as an unmodifiable list.
+- **`Stream.mapMulti()` (Java 16)** — `StreamMapMultiExample`: flattens each
+  team into its players' names.
+- **`Collectors.teeing()` (Java 12)** — `CollectorsTeeingExample`: total and
+  average league goals in a single pass.
+- **`takeWhile()` / `dropWhile()` (Java 9)** — `TakeWhileDropWhileExample`:
+  splits the goals-descending player list at a threshold.
+- **`Stream.iterate()` predicate overload (Java 9)** —
+  `StreamIterateExample`: matchweeks 1–38 with no explicit `limit()`.
+- **`Stream.ofNullable()` (Java 9)** — `StreamOfNullableExample`: nullable
+  player lookup as a zero-or-one-element stream.
+- **Sequenced-collection stream view (Java 21)** —
+  `SequencedCollectionStreamExample`: teams last-to-first via `reversed()`.
+- **`Collectors.toUnmodifiableList()` (Java 10)** —
+  `CollectorsGroupingByExample`: players grouped by team into unmodifiable
+  lists (backs stage 4's `GET /api/streams/grouped-by-team`).
+
+**Other**
 
 - **Records (Java 16)** — `data.Player`, `data.Team`, and `data.Match`
   model the shared dataset as records (stage 2). Dedicated record-feature
