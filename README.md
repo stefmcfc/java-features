@@ -47,13 +47,15 @@ The `data/` package carries the shared dataset (stage 2): `Player`,
 in-memory lists (6 teams, 22 players, 10 matches). The `streams/` package
 carries the stage-3 examples (see Feature Coverage below). The
 `collections/` package carries the stage-6 collection-API examples. The
-`optional/` package carries the stage-5 `java.util.Optional` examples. The `api/`
-package carries the REST layer: `StreamsController` (stage 4) exposes
-`GET /api/streams/top-scorers` and `GET /api/streams/grouped-by-team`;
-`OptionalController` (stage 5) exposes `GET /api/optional/team-top-scorer`.
-Every handler delegates straight to a static method in the matching topic
-package. The remaining packages still hold only a `package-info.java`
-scaffold and fill in over the later stages.
+`optional/` package carries the stage-5 `java.util.Optional` examples. The
+`var/`, `text_blocks/`, and `records/` packages carry the stage-7 language-
+basics examples. The `api/` package carries the REST layer:
+`StreamsController` (stage 4) exposes `GET /api/streams/top-scorers` and
+`GET /api/streams/grouped-by-team`; `OptionalController` (stage 5) exposes
+`GET /api/optional/team-top-scorer`; `RecordsController` (stage 7) exposes
+`GET /api/records/player/{id}`. Every handler delegates straight to a static
+method in the matching topic package. The remaining packages still hold
+only a `package-info.java` scaffold and fill in over the later stages.
 
 ## Running the Examples
 
@@ -88,6 +90,12 @@ Stage 5 adds:
 - `GET /api/optional/team-top-scorer?team=<name>` — 200 with that team's top
   scorer as JSON, or 404 with an RFC 9457 `ProblemDetail` body for an
   unknown team
+
+Stage 7 adds:
+
+- `GET /api/records/player/{id}` — 200 with the player at that position in
+  the dataset as a `PlayerSummary` record DTO, or 404 with an RFC 9457
+  `ProblemDetail` body for an unknown id
 
 ## Testing
 
@@ -132,12 +140,26 @@ a later stage introduces real logic to measure (see `FUTURE-25`).
   season's matches ordered by date, with `getFirst()`, `getLast()`, and a
   `reversed()` view.
 
+**Records and language basics (stage 7)** — one example class per feature in
+`var/`, `text_blocks/`, and `records/`:
+
+- **`var` local type inference (Java 10)** — `VarLocalInferenceExample`:
+  the same "more assists than goals" player query run once with `var`
+  locals and once with explicit types, proving they return identical
+  results.
+- **Text blocks (Java 15)** — `MatchdayReportExample`: a multi-line
+  matchday report built from a `Match` with `String.formatted()`.
+- **Records with compact constructors (Java 16)** — `PlayerSummaryExample`:
+  its nested `PlayerSummary` record validates `goals`/`assists` are
+  non-negative in a compact constructor, throwing `IllegalArgumentException`
+  otherwise; `findById()` looks one up by dataset position (backs stage 7's
+  `GET /api/records/player/{id}`).
+
 **Other**
 
 - **Records (Java 16)** — `data.Player`, `data.Team`, and `data.Match`
-  model the shared dataset as records (stage 2). Dedicated record-feature
-  examples (compact constructors, record patterns, …) follow in a later
-  stage.
+  model the shared dataset as records (stage 2). Record patterns follow in
+  a later stage.
 - **Immutable collection factories (Java 9)** — `data.PremierLeagueDataBase`
   builds its lists with `List.of`.
 
@@ -163,6 +185,9 @@ HTTP, documented via springdoc-openapi:
 - **`OptionalController`** (stage 5) — `GET /api/optional/team-top-scorer`,
   delegating straight to `OptionalOrExample.topScorerOfTeam()` and mapping
   an absent result to a 404 `ProblemDetail`.
+- **`RecordsController`** (stage 7) — `GET /api/records/player/{id}`,
+  delegating straight to `PlayerSummaryExample.findById()` and mapping an
+  unknown id to a 404 `ProblemDetail`.
 
 See `specs/modern-java-features-spec.md` for the full coverage list this
 project works towards.
