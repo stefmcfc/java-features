@@ -16,14 +16,20 @@ Requires JDK 21 to be resolvable via the configured Gradle toolchain
 
 ## Running Examples (CLI)
 
-Feature example classes land from stage 3 onward; each exposes a `main`
-method runnable directly. The stage-2 shared dataset already has one — to
-print a summary of the in-memory Premier League data:
+Every example class exposes a `main` method runnable directly. Build once,
+then run any class on the compiled-classes classpath:
 
 ```
 ./gradlew build
+java -cp build/classes/java/main uk.co.stefirby.java.features.streams.StreamToListExample
 java -cp build/classes/java/main uk.co.stefirby.java.features.data.PremierLeagueDataBase
 ```
+
+Stage 3 added the `streams/` examples: `StreamToListExample`,
+`StreamMapMultiExample`, `CollectorsTeeingExample`,
+`TakeWhileDropWhileExample`, `StreamIterateExample`,
+`StreamOfNullableExample`, `SequencedCollectionStreamExample`, and
+`CollectorsGroupingByExample`.
 
 ## Running the Spring Boot API
 
