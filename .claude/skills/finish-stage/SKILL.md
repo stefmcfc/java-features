@@ -38,7 +38,12 @@ stop and report what's missing instead of proceeding.
    sections.
 3. **Update the stage file itself** under `specs/stages/` — mark each AC as
    done (e.g. change a `- [ ]` to `- [x]`, or however the file tracks status).
-4. **Stage and commit.** Write the commit message in Conventional Commits
+4. **Update the progress table in `specs/stages/README.md`** — flip the
+   completed stage's row to "Complete". While there, reconcile the table
+   against the `stage-<N>-*.md` files actually present: any stage file added
+   since the table was last touched (e.g. promoted from
+   `specs/future-development.md`) gets a new row with status "Not started".
+5. **Stage and commit.** Write the commit message in Conventional Commits
    style per CLAUDE.md's Commit style section (e.g.
    `feat(streams): complete stage 3 — post-Java-8 Stream API examples`),
    describing what the stage delivered and referencing the stage
