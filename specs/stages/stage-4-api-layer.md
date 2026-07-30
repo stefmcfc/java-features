@@ -23,28 +23,28 @@ built. No API security (tracked as `FUTURE-16` in
 ACs are in EARS format per `specs/ears-conventions.md`; `[AUTO]`/`[MANUAL]`
 marks the verification route.
 
-- [ ] `STAGE-4-AC-01` [AUTO] — When `GET /api/streams/top-scorers` is
+- [x] `STAGE-4-AC-01` [AUTO] — When `GET /api/streams/top-scorers` is
       requested, the API shall respond 200 with the JSON result of the
       stage-3 top-scorers static method, delegating straight to it.
-- [ ] `STAGE-4-AC-02` [AUTO] — When `GET /api/streams/grouped-by-team` is
+- [x] `STAGE-4-AC-02` [AUTO] — When `GET /api/streams/grouped-by-team` is
       requested, the API shall respond 200 with the JSON result of the
       stage-3 grouped-by-team static method, delegating straight to it.
-- [ ] `STAGE-4-AC-03` [MANUAL] — Controllers shall contain no
+- [x] `STAGE-4-AC-03` [MANUAL] — Controllers shall contain no
       data-shaping/feature logic of their own (thin-controller rule) —
       verified by inspection during review (automatable later via ArchUnit,
       `FUTURE-14`).
-- [ ] `STAGE-4-AC-04` [MANUAL] — Routing/config shall use Spring Boot
+- [x] `STAGE-4-AC-04` [MANUAL] — Routing/config shall use Spring Boot
       4.1-idiomatic patterns only (no `javax.*`, no deprecated
       `WebMvcConfigurer`-style config carried over from Boot 3) — verified
       by inspection during review.
-- [ ] `STAGE-4-AC-05` [AUTO] — An integration-level Spock spec
+- [x] `STAGE-4-AC-05` [AUTO] — An integration-level Spock spec
       (`@SpringBootTest` with the Boot 4.1-idiomatic test client) shall
       request both endpoints and assert response status and shape.
-- [ ] `STAGE-4-AC-06` [AUTO] — When `GET /v3/api-docs` is requested,
+- [x] `STAGE-4-AC-06` [AUTO] — When `GET /v3/api-docs` is requested,
       springdoc-openapi (a version compatible with Spring Boot 4.1) shall
       return an OpenAPI 3.x document, and the default springdoc Swagger UI
       path shall respond successfully.
-- [ ] `STAGE-4-AC-07` [AUTO] — The `/v3/api-docs` response shall list both
+- [x] `STAGE-4-AC-07` [AUTO] — The `/v3/api-docs` response shall list both
       stage-4 endpoint paths — asserted by a Spock spec, so the docs are
       proven to track the real controllers rather than being
       hand-maintained.

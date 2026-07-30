@@ -37,9 +37,23 @@ Stage 3 added the `streams/` examples: `StreamToListExample`,
 ./gradlew bootRun
 ```
 
-Starts `uk.co.stefirby.java.features.JavaFeaturesApplication`. No REST
-endpoints are wired up yet (stage 1 only proves the application context
-loads).
+Starts `uk.co.stefirby.java.features.JavaFeaturesApplication` on port 8080.
+Stage 4 added the first REST endpoints, served by `api.StreamsController`:
+
+```
+GET /api/streams/top-scorers
+GET /api/streams/grouped-by-team
+```
+
+Both delegate straight to the stage-3 static methods (`StreamToListExample`,
+`CollectorsGroupingByExample`) — no logic lives in the controller.
+
+springdoc-openapi is wired in alongside them, so the API is self-documenting:
+
+```
+GET /v3/api-docs           # generated OpenAPI 3.x document
+GET /swagger-ui/index.html # Swagger UI over that document
+```
 
 ## Configuration
 
