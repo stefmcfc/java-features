@@ -42,6 +42,10 @@ Stage 7 added the `var/`, `text_blocks/`, and `records/` examples:
 `VarLocalInferenceExample`, `MatchdayReportExample`, and
 `PlayerSummaryExample`.
 
+Stage 8 added the `sealed/`, `pattern_matching/`, and `switch_expressions/`
+examples: `MatchOutcomeExample`, `InstanceofPatternMatchingExample`,
+`SwitchPatternMatchingExample`, and `ArrowSwitchExample`.
+
 ## Running the Spring Boot API
 
 ```

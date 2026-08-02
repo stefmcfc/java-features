@@ -49,7 +49,9 @@ carries the stage-3 examples (see Feature Coverage below). The
 `collections/` package carries the stage-6 collection-API examples. The
 `optional/` package carries the stage-5 `java.util.Optional` examples. The
 `var/`, `text_blocks/`, and `records/` packages carry the stage-7 language-
-basics examples. The `api/` package carries the REST layer:
+basics examples. The `sealed/`, `pattern_matching/`, and
+`switch_expressions/` packages carry the stage-8 sealed-types and
+pattern-matching examples. The `api/` package carries the REST layer:
 `StreamsController` (stage 4) exposes `GET /api/streams/top-scorers` and
 `GET /api/streams/grouped-by-team`; `OptionalController` (stage 5) exposes
 `GET /api/optional/team-top-scorer`; `RecordsController` (stage 7) exposes
@@ -155,11 +157,31 @@ a later stage introduces real logic to measure (see `FUTURE-25`).
   otherwise; `findById()` looks one up by dataset position (backs stage 7's
   `GET /api/records/player/{id}`).
 
+**Sealed types and pattern matching (stage 8)** — one example class per
+feature in `sealed/`, `pattern_matching/`, and `switch_expressions/`:
+
+- **Sealed interfaces (Java 17)** — `MatchOutcomeExample`: models match
+  results as a sealed `MatchOutcome` hierarchy permitting exactly
+  `HomeWin`, `AwayWin`, and `Draw`; `outcomeOf()` classifies any `Match`
+  into one of them.
+- **`instanceof` pattern matching (Java 16)** —
+  `InstanceofPatternMatchingExample`: describes an object that may be a
+  `Player`, `Team`, or `Match` via pattern variables, with no explicit
+  casts.
+- **`switch` pattern matching with record deconstruction (Java 21)** —
+  `SwitchPatternMatchingExample`: summarises each `MatchOutcome` by
+  deconstructing its components in `switch` cases — exhaustive over the
+  sealed hierarchy with no `default` branch.
+- **Arrow `switch` expressions with `yield` (Java 14)** —
+  `ArrowSwitchExample`: maps a player's position to a category with
+  `switch` as an expression, including a multi-statement `yield` branch
+  for unknown positions.
+
 **Other**
 
 - **Records (Java 16)** — `data.Player`, `data.Team`, and `data.Match`
-  model the shared dataset as records (stage 2). Record patterns follow in
-  a later stage.
+  model the shared dataset as records (stage 2). Record patterns are
+  covered by stage 8's `SwitchPatternMatchingExample`.
 - **Immutable collection factories (Java 9)** — `data.PremierLeagueDataBase`
   builds its lists with `List.of`.
 
