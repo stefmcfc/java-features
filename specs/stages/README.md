@@ -20,7 +20,7 @@ once their spec passes.
 | 6 | [collections](stage-6-collections.md) | Complete |
 | 7 | [records-and-basics](stage-7-records-and-basics.md) | Complete |
 | 8 | [sealed-and-pattern-matching](stage-8-sealed-and-pattern-matching.md) | Complete |
-| 9 | [concurrency](stage-9-concurrency.md) | Not started |
+| 9 | [concurrency](stage-9-concurrency.md) | Complete |
 | 10 | [other-apis](stage-10-other-apis.md) | Not started |
 
 Stage 4 is pulled forward (ahead of Optional/Collections/language features) to

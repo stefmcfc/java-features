@@ -51,13 +51,17 @@ carries the stage-3 examples (see Feature Coverage below). The
 `var/`, `text_blocks/`, and `records/` packages carry the stage-7 language-
 basics examples. The `sealed/`, `pattern_matching/`, and
 `switch_expressions/` packages carry the stage-8 sealed-types and
-pattern-matching examples. The `api/` package carries the REST layer:
+pattern-matching examples. The `concurrency/` package carries the stage-9
+virtual-threads examples; its structured-concurrency example lives in the
+dedicated `src/preview/java` source set (see Feature Coverage below). The
+`api/` package carries the REST layer:
 `StreamsController` (stage 4) exposes `GET /api/streams/top-scorers` and
 `GET /api/streams/grouped-by-team`; `OptionalController` (stage 5) exposes
 `GET /api/optional/team-top-scorer`; `RecordsController` (stage 7) exposes
-`GET /api/records/player/{id}`. Every handler delegates straight to a static
-method in the matching topic package. The remaining packages still hold
-only a `package-info.java` scaffold and fill in over the later stages.
+`GET /api/records/player/{id}`; `ConcurrencyController` (stage 9) exposes
+`GET /api/concurrency/thread-info`. Every handler delegates straight to a
+static method in the matching topic package. The remaining packages still
+hold only a `package-info.java` scaffold and fill in over the later stages.
 
 ## Running the Examples
 
@@ -69,6 +73,16 @@ then run any class directly, e.g.:
 java -cp build/classes/java/main uk.co.stefirby.java.features.streams.StreamToListExample
 java -cp build/classes/java/main uk.co.stefirby.java.features.data.PremierLeagueDataBase
 ```
+
+The one exception is the structured-concurrency example, which uses a
+preview API and therefore needs the preview source set's output and the
+`--enable-preview` runtime flag:
+
+```
+java --enable-preview -cp "build/classes/java/preview;build/classes/java/main" uk.co.stefirby.java.features.concurrency.StructuredConcurrencyExample
+```
+
+(Use `:` instead of `;` as the classpath separator on macOS/Linux.)
 
 The minimal Spring Boot entry point is
 `uk.co.stefirby.java.features.JavaFeaturesApplication`.
@@ -98,6 +112,13 @@ Stage 7 adds:
 - `GET /api/records/player/{id}` — 200 with the player at that position in
   the dataset as a `PlayerSummary` record DTO, or 404 with an RFC 9457
   `ProblemDetail` body for an unknown id
+
+Stage 9 adds:
+
+- `GET /api/concurrency/thread-info` — the serving thread's name and
+  virtual-ness; with `spring.threads.virtual.enabled=true` set in
+  `application.properties`, the report shows every request being handled on
+  a virtual thread
 
 ## Testing
 
@@ -177,6 +198,23 @@ feature in `sealed/`, `pattern_matching/`, and `switch_expressions/`:
   `switch` as an expression, including a multi-statement `yield` branch
   for unknown positions.
 
+**Concurrency (stage 9)** — one example class per feature in `concurrency/`:
+
+- **Virtual threads (Java 21)** — `VirtualThreadsExample`: runs three
+  Premier League queries concurrently on
+  `Executors.newVirtualThreadPerTaskExecutor()`, each task recording
+  `Thread::isVirtual` from inside to prove it ran on a virtual thread.
+- **Structured concurrency (Java 21, preview — JEP 453)** —
+  `StructuredConcurrencyExample`: forks two dataset queries as subtasks of
+  one `StructuredTaskScope.ShutdownOnFailure` scope that succeeds or fails
+  as a unit. Lives in the dedicated `src/preview/java` source set — the
+  only code in the project compiled with `--enable-preview`, keeping the
+  flag's blast radius to this one class.
+- **`Thread::isVirtual` behind the API (Java 21)** — `ThreadInfoExample`:
+  reports the calling thread's name and virtual-ness; backs the stage-9
+  endpoint demonstrating Boot 4's one-property Loom payoff
+  (`spring.threads.virtual.enabled=true`).
+
 **Other**
 
 - **Records (Java 16)** — `data.Player`, `data.Team`, and `data.Match`
@@ -210,6 +248,10 @@ HTTP, documented via springdoc-openapi:
 - **`RecordsController`** (stage 7) — `GET /api/records/player/{id}`,
   delegating straight to `PlayerSummaryExample.findById()` and mapping an
   unknown id to a 404 `ProblemDetail`.
+- **`ConcurrencyController`** (stage 9) — `GET /api/concurrency/thread-info`,
+  delegating straight to `ThreadInfoExample.currentThreadReport()`; with
+  `spring.threads.virtual.enabled=true` the report proves the request was
+  served on a virtual thread.
 
 See `specs/modern-java-features-spec.md` for the full coverage list this
 project works towards.
