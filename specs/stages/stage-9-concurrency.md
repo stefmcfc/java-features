@@ -23,15 +23,15 @@ each example class shall expose its feature logic as static methods, shall
 provide a `main` method printing the result, and shall carry a Javadoc
 header naming the JDK version; each AC is verified by a passing Spock spec.
 
-- [ ] `STAGE-9-AC-01` [AUTO] — When the virtual-threads (21) example runs
+- [x] `STAGE-9-AC-01` [AUTO] — When the virtual-threads (21) example runs
       its concurrent PL queries, every task shall execute on a virtual
       thread (asserted via `Thread::isVirtual`).
-- [ ] `STAGE-9-AC-02` [AUTO] — Where the build enables the preview flag the
+- [x] `STAGE-9-AC-02` [AUTO] — Where the build enables the preview flag the
       target JDK requires, the structured-concurrency example shall run
       two dataset queries as subtasks of one scope that succeeds or fails
       as a unit; its Javadoc header shall explicitly flag the API as
       preview.
-- [ ] `STAGE-9-AC-03` [AUTO] — While `spring.threads.virtual.enabled=true`,
+- [x] `STAGE-9-AC-03` [AUTO] — While `spring.threads.virtual.enabled=true`,
       when the thread-info endpoint is requested, the API shall serve the
       request on a virtual thread — the thread report comes from a
       `concurrency` static method behind a thin controller, and an

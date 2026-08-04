@@ -46,6 +46,17 @@ Stage 8 added the `sealed/`, `pattern_matching/`, and `switch_expressions/`
 examples: `MatchOutcomeExample`, `InstanceofPatternMatchingExample`,
 `SwitchPatternMatchingExample`, and `ArrowSwitchExample`.
 
+Stage 9 added the `concurrency/` examples: `VirtualThreadsExample` and
+`ThreadInfoExample`, plus `StructuredConcurrencyExample` in the dedicated
+`src/preview/java` source set. That last one uses a preview API (JEP 453),
+so it runs off the preview source set's output with `--enable-preview`:
+
+```
+java --enable-preview -cp "build/classes/java/preview;build/classes/java/main" uk.co.stefirby.java.features.concurrency.StructuredConcurrencyExample
+```
+
+(Use `:` instead of `;` as the classpath separator on macOS/Linux.)
+
 ## Running the Spring Boot API
 
 ```
@@ -86,6 +97,17 @@ Delegates straight to `PlayerSummaryExample.findById()`. A known id responds
 200 with that player as a `PlayerSummary` record DTO; an unknown id responds
 404 with an RFC 9457 `ProblemDetail` body.
 
+Stage 9 added `api.ConcurrencyController`:
+
+```
+GET /api/concurrency/thread-info
+```
+
+Delegates straight to `ThreadInfoExample.currentThreadReport()`. With
+`spring.threads.virtual.enabled=true` set in `application.properties`, the
+whole HTTP layer runs on virtual threads, so the returned report shows
+`"virtual": true` for the serving thread.
+
 springdoc-openapi is wired in alongside them, so the API is self-documenting:
 
 ```
@@ -111,6 +133,11 @@ Runs the Spock spec suite (`src/test/groovy`) via the JUnit Platform. The
 pre-commit hook (`githooks/pre-commit`) runs this same command and blocks
 the commit on failure.
 
+Because the stage-9 structured-concurrency example is compiled from the
+preview source set, the test JVM and the forked Groovy test compiler both
+run with `--enable-preview` (configured in `build.gradle.kts`); main
+production code stays preview-free.
+
 ## Troubleshooting
 
 - **Build fails to resolve a JDK 21 toolchain:** confirm a JDK 21
@@ -119,6 +146,10 @@ the commit on failure.
 - **`spock-core`/`spock-spring` dependency resolution errors:** the pinned
   version is `2.4-groovy-5.0`, matching the Groovy 5.0.x managed by the
   Spring Boot 4.1 BOM; check `build.gradle.kts` if this drifts.
+- **`UnsupportedClassVersionError: ... preview features are not enabled`
+  when running `StructuredConcurrencyExample`:** preview classfiles only
+  load in a JVM started with `--enable-preview` — include the flag and the
+  `build/classes/java/preview` classpath entry as shown above.
 
 ## Development Workflow
 
