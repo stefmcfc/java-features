@@ -90,7 +90,9 @@ headline additions between 21 and 25, gated behind bumping the target;
       layer, so the endpoint catalogue is browsable/testable via Swagger UI
       without adding a frontend of our own. *Promoted into stage 4 as
       `STAGE-4-AC-06`/`STAGE-4-AC-07` — tracked there now.*
-- [ ] `FUTURE-16` — **Spring Security exploration, toggleable.** Secure the
+- [x] `FUTURE-16` — **Spring Security exploration, toggleable.** *Promoted
+      into stage 15 (`stage-15-config-and-security.md`) — tracked there
+      now.* Secure the
       REST layer (start with HTTP Basic or an API key, graduate to bearer
       token/JWT) as a way of exploring Spring Security under Spring Boot 4.1
       conventions. Must be switchable via a feature flag — e.g. a
@@ -123,10 +125,12 @@ error responses, and `RestClient`/`@HttpExchange` clients were promoted
 straight into stages 9, 5, and 10 respectively — see `STAGE-9-AC-03`,
 `STAGE-5-AC-05b`, `STAGE-10-AC-04`.)
 
-- [ ] `FUTURE-17` — **`@ConfigurationProperties` bound to records** —
+- [x] `FUTURE-17` — **`@ConfigurationProperties` bound to records** —
       constructor binding onto an immutable record is the idiomatic Boot 4
       config style and a real-world payoff of the stage-7 records material.
       Natural first customer: the `security.enabled` toggle in `FUTURE-16`.
+      *Promoted into stage 15 (`stage-15-config-and-security.md`) — tracked
+      there now.*
 - [ ] `FUTURE-18` — **First-class API versioning** — Spring Framework 7's
       native API version negotiation for controllers; demo with a v1/v2 of
       one existing endpoint. Little tutorial coverage exists yet, which makes
@@ -137,18 +141,22 @@ straight into stages 9, 5, and 10 respectively — see `STAGE-9-AC-03`,
       `@ConcurrencyLimit`) — retry support moved into Spring Framework
       proper in this generation; pairs with the HTTP-client examples
       (retry a flaky call, cap concurrent calls). Ties into `FUTURE-03`.
-- [ ] `FUTURE-20` — **JSpecify null-safety annotations** — Framework 7
+- [x] `FUTURE-20` — **JSpecify null-safety annotations** — Framework 7
       adopted JSpecify across its codebase; adopt it in this project's
       packages too. Complements the `optional` package's story about
-      modelling absence.
-- [ ] `FUTURE-21` — **Actuator + Micrometer observability** — health, info,
+      modelling absence. *Promoted into stage 13
+      (`stage-13-null-safety.md`) — tracked there now.*
+- [x] `FUTURE-21` — **Actuator + Micrometer observability** — health, info,
       and metrics endpoints; near-zero effort and gives `RUNBOOK.md`
       something operational to document (which endpoints exist, what healthy
       looks like). Fold in the Boot 4.0 `spring-boot-starter-opentelemetry`
       (auto-configured OTLP metrics/traces export) and Boot 4.1's
       observability context propagation for `@Async` methods, which pairs
-      with the `concurrency` package.
-- [ ] `FUTURE-29` — **HTTP service client auto-configuration (Boot 4.0).**
+      with the `concurrency` package. *Promoted into stage 16
+      (`stage-16-observability.md`) — tracked there now.*
+- [x] `FUTURE-29` — **HTTP service client auto-configuration (Boot 4.0).**
+      *Promoted into stage 14 (`stage-14-http-client-modernisation.md`) —
+      tracked there now.*
       Stage 10's `HttpExchangeExample` wires `HttpServiceProxyFactory` +
       `RestClientAdapter` by hand; Boot 4.0 made that obsolete — declare the
       interface group with `@ImportHttpServices` and configure base URLs via
@@ -157,7 +165,9 @@ straight into stages 9, 5, and 10 respectively — see `STAGE-9-AC-03`,
       variant alongside for the old-way/new-way contrast this project is
       built on. Ranks above most of this section: it modernises code the
       project already has.
-- [ ] `FUTURE-30` — **SSRF mitigation via `InetAddressFilter` (Boot 4.1).**
+- [x] `FUTURE-30` — **SSRF mitigation via `InetAddressFilter` (Boot 4.1).**
+      *Promoted into stage 14 (`stage-14-http-client-modernisation.md`) —
+      tracked there now.*
       One auto-configured bean filters outbound HTTP-client requests by
       resolved address, closing the SSRF class of attack. Slots straight
       into the `httpclient` package's client comparison, and becomes

@@ -24,6 +24,10 @@ once their spec passes.
 | 10 | [other-apis](stage-10-other-apis.md) | Complete |
 | 11 | [streams-part-2](stage-11-streams-part-2.md) | Complete |
 | 12 | [async-and-simulation](stage-12-async-and-simulation.md) | Complete |
+| 13 | [null-safety](stage-13-null-safety.md) | Not started |
+| 14 | [http-client-modernisation](stage-14-http-client-modernisation.md) | Not started |
+| 15 | [config-and-security](stage-15-config-and-security.md) | Not started |
+| 16 | [observability](stage-16-observability.md) | Not started |
 
 Stage 4 is pulled forward (ahead of Optional/Collections/language features) to
 match the spec's own "Next Steps": prove the Spring Boot 4.1 wiring end-to-end
