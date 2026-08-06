@@ -130,7 +130,9 @@ straight into stages 9, 5, and 10 respectively — see `STAGE-9-AC-03`,
 - [ ] `FUTURE-18` — **First-class API versioning** — Spring Framework 7's
       native API version negotiation for controllers; demo with a v1/v2 of
       one existing endpoint. Little tutorial coverage exists yet, which makes
-      it a good reference example.
+      it a good reference example. Boot 4.0 auto-configures it via
+      `spring.mvc.apiversion.*` properties — the property-driven route is
+      the idiomatic implementation when this is picked up.
 - [ ] `FUTURE-19` — **Core resilience annotations** (`@Retryable`,
       `@ConcurrencyLimit`) — retry support moved into Spring Framework
       proper in this generation; pairs with the HTTP-client examples
@@ -142,7 +144,30 @@ straight into stages 9, 5, and 10 respectively — see `STAGE-9-AC-03`,
 - [ ] `FUTURE-21` — **Actuator + Micrometer observability** — health, info,
       and metrics endpoints; near-zero effort and gives `RUNBOOK.md`
       something operational to document (which endpoints exist, what healthy
-      looks like).
+      looks like). Fold in the Boot 4.0 `spring-boot-starter-opentelemetry`
+      (auto-configured OTLP metrics/traces export) and Boot 4.1's
+      observability context propagation for `@Async` methods, which pairs
+      with the `concurrency` package.
+- [ ] `FUTURE-29` — **HTTP service client auto-configuration (Boot 4.0).**
+      Stage 10's `HttpExchangeExample` wires `HttpServiceProxyFactory` +
+      `RestClientAdapter` by hand; Boot 4.0 made that obsolete — declare the
+      interface group with `@ImportHttpServices` and configure base URLs via
+      properties, and Boot builds the client bean. Upgrade
+      `TopScorersExchange` to the auto-configured style, keeping the manual
+      variant alongside for the old-way/new-way contrast this project is
+      built on. Ranks above most of this section: it modernises code the
+      project already has.
+- [ ] `FUTURE-30` — **SSRF mitigation via `InetAddressFilter` (Boot 4.1).**
+      One auto-configured bean filters outbound HTTP-client requests by
+      resolved address, closing the SSRF class of attack. Slots straight
+      into the `httpclient` package's client comparison, and becomes
+      practically necessary if `FUTURE-03` (calling a real external API) is
+      picked up — tie the two together when either starts.
+- [ ] `FUTURE-31` — **gRPC auto-configuration (Boot 4.1).** Spring gRPC
+      brings first-class gRPC server/client support to Boot. Headline
+      feature of the release, but a second RPC surface is arguably
+      off-mission for a REST-demo project — low priority, and skipping it
+      deliberately (as was done for JPMS) is a legitimate outcome.
 
 ## Package layout
 
