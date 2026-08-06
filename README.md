@@ -135,8 +135,8 @@ Stage 7 adds:
 Stage 9 adds:
 
 - `GET /api/concurrency/thread-info` — the serving thread's name and
-  virtual-ness; with `spring.threads.virtual.enabled=true` set in
-  `application.properties`, the report shows every request being handled on
+  virtual-ness; with `spring.threads.virtual.enabled: true` set in
+  `application.yml`, the report shows every request being handled on
   a virtual thread
 
 Stage 11 adds:

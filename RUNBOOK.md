@@ -124,7 +124,7 @@ GET /api/optional/team-top-scorer?team=<name>
 Delegates straight to `OptionalOrExample.topScorerOfTeam()`. A known team
 responds 200 with that team's top scorer as JSON; an unknown team responds
 404 with an RFC 9457 `ProblemDetail` body — enabled via
-`spring.mvc.problemdetails.enabled=true` in `application.properties`, so an
+`spring.mvc.problemdetails.enabled: true` in `application.yml`, so an
 unhandled `ResponseStatusException` renders as a standard problem-details
 document rather than Boot's default error page.
 
@@ -145,7 +145,7 @@ GET /api/concurrency/thread-info
 ```
 
 Delegates straight to `ThreadInfoExample.currentThreadReport()`. With
-`spring.threads.virtual.enabled=true` set in `application.properties`, the
+`spring.threads.virtual.enabled: true` set in `application.yml`, the
 whole HTTP layer runs on virtual threads, so the returned report shows
 `"virtual": true` for the serving thread.
 

@@ -18,7 +18,7 @@ In: a new configuration-properties record (e.g.
 binding, a Spring Security 7 configuration guarded by
 `@ConditionalOnBooleanProperty` (check current Boot 4.1 docs for the
 idiomatic conditional before writing it), HTTP Basic as the first
-mechanism, and `application.properties`. The properties record lives
+mechanism, and `application.yml`. The properties record lives
 with the security configuration, not in a topic package — it is Spring
 wiring, not a Java feature example.
 

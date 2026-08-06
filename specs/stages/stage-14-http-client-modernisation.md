@@ -16,7 +16,7 @@ the SSRF attack class on all outbound clients with Boot 4.1's
 In: `uk.co.stefirby.java.features.httpclient` (the auto-configured client
 group and its comparison against the manual wiring), a small Spring
 configuration carrying the `@ImportHttpServices` declaration and the
-`InetAddressFilter` bean, and `application.properties` (the client
+`InetAddressFilter` bean, and `application.yml` (the client
 group's base-URL property). Check the current Boot 4.1 reference docs for
 the exact group/property names before writing the wiring — this is
 new-generation API with little tutorial coverage.
