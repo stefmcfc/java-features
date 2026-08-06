@@ -76,6 +76,11 @@ classpath), or exercise all three via their Spock specs
 (`./gradlew test --tests "*httpclient*"`), which boot the app on a random
 port automatically.
 
+Stage 11 added the remaining `streams/` examples (`CollectorsFlatMappingExample`,
+`CollectorsFilteringExample`, `CollectorsUnmodifiableExample`,
+`PredicateNotExample`, `LocalDateDatesUntilExample`) and the `collections/`
+defensive-copy example (`ImmutableCopyExample`).
+
 ## Running the Spring Boot API
 
 ```
@@ -126,6 +131,19 @@ Delegates straight to `ThreadInfoExample.currentThreadReport()`. With
 `spring.threads.virtual.enabled=true` set in `application.properties`, the
 whole HTTP layer runs on virtual threads, so the returned report shows
 `"virtual": true` for the serving thread.
+
+Stage 11 added two more handlers to `api.StreamsController`:
+
+```
+GET /api/streams/scorers-by-team
+GET /api/streams/players-by-position?minGoals=<n>
+```
+
+The first delegates straight to
+`CollectorsFlatMappingExample.scorerNamesByTeam()`. The second delegates to
+`CollectorsFilteringExample.playersByPositionWithMinGoals()`; `minGoals`
+defaults to `0` when omitted, and a negative value responds 400 with an
+RFC 9457 `ProblemDetail` body.
 
 springdoc-openapi is wired in alongside them, so the API is self-documenting:
 

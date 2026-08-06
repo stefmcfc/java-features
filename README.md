@@ -58,14 +58,19 @@ dedicated `src/preview/java` source set (see Feature Coverage below). The
 `HttpClient` contrasted with Spring's `RestClient` and a declarative
 `@HttpExchange` interface — and `text_blocks/` also hosts the stage-10
 Java 11 `String` and `Files` string helpers, since the spec's package
-layout defines no dedicated package for them. The
+layout defines no dedicated package for them. Stage 11 rounds out the
+`streams/` package with the remaining `Collectors` downstream combinators,
+the unmodifiable collectors, `Predicate.not()`, and a `LocalDate.datesUntil()`
+example, and rounds out `collections/` with the `List.copyOf()`/`Map.copyOf()`
+defensive-copy example. The
 `api/` package carries the REST layer:
-`StreamsController` (stage 4) exposes `GET /api/streams/top-scorers` and
-`GET /api/streams/grouped-by-team`; `OptionalController` (stage 5) exposes
-`GET /api/optional/team-top-scorer`; `RecordsController` (stage 7) exposes
-`GET /api/records/player/{id}`; `ConcurrencyController` (stage 9) exposes
-`GET /api/concurrency/thread-info`. Every handler delegates straight to a
-static method in the matching topic package. Only `qAnda/` still holds
+`StreamsController` (stages 4 and 11) exposes `GET /api/streams/top-scorers`,
+`GET /api/streams/grouped-by-team`, `GET /api/streams/scorers-by-team`, and
+`GET /api/streams/players-by-position`; `OptionalController` (stage 5)
+exposes `GET /api/optional/team-top-scorer`; `RecordsController` (stage 7)
+exposes `GET /api/records/player/{id}`; `ConcurrencyController` (stage 9)
+exposes `GET /api/concurrency/thread-info`. Every handler delegates straight
+to a static method in the matching topic package. Only `qAnda/` still holds
 just a `package-info.java` scaffold.
 
 ## Running the Examples
@@ -125,6 +130,15 @@ Stage 9 adds:
   `application.properties`, the report shows every request being handled on
   a virtual thread
 
+Stage 11 adds:
+
+- `GET /api/streams/scorers-by-team` — 200 with each team mapped to its
+  goal-scorers' names, via `Collectors.flatMapping()`
+- `GET /api/streams/players-by-position?minGoals=<n>` — 200 with players
+  grouped by position, keeping only those with at least `minGoals` goals
+  (defaults to `0`), via `Collectors.filtering()`; a negative `minGoals`
+  responds 400 with an RFC 9457 `ProblemDetail` body
+
 ## Testing
 
 ```
@@ -158,6 +172,24 @@ a later stage introduces real logic to measure (see `FUTURE-25`).
   `CollectorsGroupingByExample`: players grouped by team into unmodifiable
   lists (backs stage 4's `GET /api/streams/grouped-by-team`).
 
+**Streams part 2 (stage 11)** — the remaining post-Java-8 Stream/Collectors
+examples, plus the two new endpoints they back:
+
+- **`Collectors.flatMapping()` (Java 9)** — `CollectorsFlatMappingExample`:
+  each team mapped straight to its goal-scorers' names (backs stage 11's
+  `GET /api/streams/scorers-by-team`).
+- **`Collectors.filtering()` (Java 9)** — `CollectorsFilteringExample`:
+  players grouped by position, keeping only those meeting a goals threshold
+  — a position with no qualifiers still appears, with an empty list (backs
+  stage 11's `GET /api/streams/players-by-position`).
+- **`Collectors.toUnmodifiableSet()` / `toUnmodifiableMap()` (Java 10)** —
+  `CollectorsUnmodifiableExample`: the league's distinct nationalities and
+  goals by player name, both rejecting mutation.
+- **`Predicate.not()` (Java 11)** — `PredicateNotExample`: outfield players
+  via a negated goalkeeper predicate, with no negated lambda.
+- **`LocalDate.datesUntil()` (Java 9)** — `LocalDateDatesUntilExample`: every
+  Saturday of the season, week by week, covering every match date.
+
 **Collections (stage 6)** — one example class per feature in `collections/`:
 
 - **Immutable collection factories (Java 9)** — `ImmutableFactoriesExample`:
@@ -167,6 +199,9 @@ a later stage introduces real logic to measure (see `FUTURE-25`).
 - **Sequenced Collections (Java 21)** — `SequencedCollectionsExample`: the
   season's matches ordered by date, with `getFirst()`, `getLast()`, and a
   `reversed()` view.
+- **`List.copyOf()` / `Map.copyOf()` (Java 10, stage 11)** —
+  `ImmutableCopyExample`: defensive snapshots of a mutable squad list and a
+  mutable goals-by-name map, unaffected by later mutation of their source.
 
 **Records and language basics (stage 7)** — one example class per feature in
 `var/`, `text_blocks/`, and `records/`:
@@ -262,10 +297,14 @@ against `Optional<Player>` lookups over the shared dataset:
 **API layer** — thin controllers in `api/` exposing selected examples over
 HTTP, documented via springdoc-openapi:
 
-- **`StreamsController`** (stage 4) — `GET /api/streams/top-scorers` and
-  `GET /api/streams/grouped-by-team`, delegating straight to
-  `StreamToListExample`/`CollectorsGroupingByExample`. No feature logic of
-  its own (thin-controller rule).
+- **`StreamsController`** (stages 4 and 11) — `GET /api/streams/top-scorers`
+  and `GET /api/streams/grouped-by-team`, delegating straight to
+  `StreamToListExample`/`CollectorsGroupingByExample`; stage 11 adds
+  `GET /api/streams/scorers-by-team` and
+  `GET /api/streams/players-by-position?minGoals=<n>`, delegating to
+  `CollectorsFlatMappingExample`/`CollectorsFilteringExample` and mapping a
+  negative `minGoals` to a 400 `ProblemDetail`. No feature logic of its own
+  (thin-controller rule).
 - **`OptionalController`** (stage 5) — `GET /api/optional/team-top-scorer`,
   delegating straight to `OptionalOrExample.topScorerOfTeam()` and mapping
   an absent result to a 404 `ProblemDetail`.
