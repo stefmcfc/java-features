@@ -54,14 +54,19 @@ basics examples. The `sealed/`, `pattern_matching/`, and
 pattern-matching examples. The `concurrency/` package carries the stage-9
 virtual-threads examples; its structured-concurrency example lives in the
 dedicated `src/preview/java` source set (see Feature Coverage below). The
+`httpclient/` package carries the stage-10 client examples — the Java 11
+`HttpClient` contrasted with Spring's `RestClient` and a declarative
+`@HttpExchange` interface — and `text_blocks/` also hosts the stage-10
+Java 11 `String` and `Files` string helpers, since the spec's package
+layout defines no dedicated package for them. The
 `api/` package carries the REST layer:
 `StreamsController` (stage 4) exposes `GET /api/streams/top-scorers` and
 `GET /api/streams/grouped-by-team`; `OptionalController` (stage 5) exposes
 `GET /api/optional/team-top-scorer`; `RecordsController` (stage 7) exposes
 `GET /api/records/player/{id}`; `ConcurrencyController` (stage 9) exposes
 `GET /api/concurrency/thread-info`. Every handler delegates straight to a
-static method in the matching topic package. The remaining packages still
-hold only a `package-info.java` scaffold and fill in over the later stages.
+static method in the matching topic package. Only `qAnda/` still holds
+just a `package-info.java` scaffold.
 
 ## Running the Examples
 
@@ -214,6 +219,25 @@ feature in `sealed/`, `pattern_matching/`, and `switch_expressions/`:
   reports the calling thread's name and virtual-ness; backs the stage-9
   endpoint demonstrating Boot 4's one-property Loom payoff
   (`spring.threads.virtual.enabled=true`).
+
+**Other notable APIs (stage 10)** — the `httpclient/` client examples plus
+the Java 11 `String`/`Files` helpers co-located in `text_blocks/`:
+
+- **`java.net.http.HttpClient` (Java 11)** — `HttpClientGetExample`: issues
+  a synchronous GET (aimed at the app's own stage-4 top-scorers endpoint)
+  and returns the response status and body. The base URI is a parameter, so
+  it runs against any live instance rather than a hardcoded `localhost`.
+- **`String` methods (Java 11)** — `StringMethodsExample`: `isBlank()`,
+  `strip()` (including Unicode whitespace `trim()` can't remove),
+  `repeat()`, and `lines()` over Premier League text data.
+- **`Files.writeString()` / `readString()` (Java 11)** —
+  `FilesReadWriteStringExample`: round-trips the stage-7 text-block
+  matchday report through a file with one-call string I/O.
+- **Client comparison (Spring Framework 7)** — `RestClientExample` and
+  `HttpExchangeExample` (backed by the `TopScorersExchange` interface via
+  `HttpServiceProxyFactory`) fetch the same top-scorers payload as the raw
+  JDK client — imperative JDK, fluent Spring, and declarative-interface
+  styles side by side, each proven equivalent by its own spec.
 
 **Other**
 

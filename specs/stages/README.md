@@ -21,7 +21,7 @@ once their spec passes.
 | 7 | [records-and-basics](stage-7-records-and-basics.md) | Complete |
 | 8 | [sealed-and-pattern-matching](stage-8-sealed-and-pattern-matching.md) | Complete |
 | 9 | [concurrency](stage-9-concurrency.md) | Complete |
-| 10 | [other-apis](stage-10-other-apis.md) | Not started |
+| 10 | [other-apis](stage-10-other-apis.md) | Complete |
 
 Stage 4 is pulled forward (ahead of Optional/Collections/language features) to
 match the spec's own "Next Steps": prove the Spring Boot 4.1 wiring end-to-end

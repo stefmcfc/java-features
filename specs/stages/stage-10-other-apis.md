@@ -25,17 +25,17 @@ each example class shall expose its feature logic as static methods, shall
 provide a `main` method printing the result, and shall carry a Javadoc
 header naming the JDK version; each AC is verified by a passing Spock spec.
 
-- [ ] `STAGE-10-AC-01` [AUTO] — When the `java.net.http.HttpClient` (11)
+- [x] `STAGE-10-AC-01` [AUTO] — When the `java.net.http.HttpClient` (11)
       example issues a GET request (suggested target: the app's own
       stage-4 endpoint, so no external dependency is needed), it shall
       return the response status and body.
-- [ ] `STAGE-10-AC-02` [AUTO] — When the `String` methods (11) example runs
+- [x] `STAGE-10-AC-02` [AUTO] — When the `String` methods (11) example runs
       over PL text data, `isBlank()`, `strip()`, `repeat()`, and `lines()`
       shall each produce their asserted result.
-- [ ] `STAGE-10-AC-03` [AUTO] — When the `Files.writeString()` /
+- [x] `STAGE-10-AC-03` [AUTO] — When the `Files.writeString()` /
       `readString()` (11) example writes a matchday report to a temporary
       file and reads it back, the content shall round-trip identically.
-- [ ] `STAGE-10-AC-04` [AUTO] — When the same request is made via the raw
+- [x] `STAGE-10-AC-04` [AUTO] — When the same request is made via the raw
       JDK `HttpClient`, Spring's `RestClient`, and a declarative
       `@HttpExchange` interface (suggested target: the app's own stage-4
       `/api/streams/top-scorers` endpoint), each client shall return the
