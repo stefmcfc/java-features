@@ -26,6 +26,9 @@ they can be called over HTTP, e.g. `GET /api/streams/top-scorers`.
   bolted on for convenience, not the other way around.
 - No UI/frontend.
 - No persistence layer/database — the Premier League dataset stays in-memory.
+- No Java module system (JPMS, Java 9) coverage — a deliberate decision, not an oversight:
+  modules fight the Spring Boot classpath world this project targets and have no place in
+  the enterprise systems it takes its conventions from.
 
 Deferred ideas (including a future database-backed dataset) are tracked in
 `specs/future-development.md`.
@@ -122,6 +125,10 @@ JDK release.
 - `Stream.iterate()` with predicate overload (9)
 - `Stream.ofNullable()` (9)
 - Sequenced collection stream views (21)
+- `Collectors.flatMapping()` / `Collectors.filtering()` downstream collectors (9)
+- `Collectors.toUnmodifiableSet()` / `toUnmodifiableMap()` (10)
+- `Predicate.not()` (11)
+- `LocalDate.datesUntil()` date streams (9)
 
 **Language features**
 - `var` local type inference (10)
@@ -135,6 +142,7 @@ JDK release.
 **Collections**
 - Immutable factory methods `List.of()`, `Set.of()`, `Map.of()` (9)
 - Sequenced Collections: `getFirst()`, `getLast()`, `reversed()` (21)
+- Immutable copy factories `List.copyOf()` / `Map.copyOf()` (10)
 
 **Optional**
 - `Optional.or()`, `ifPresentOrElse()` (9)
@@ -144,11 +152,15 @@ JDK release.
 **Concurrency**
 - Virtual threads (21)
 - Structured concurrency (preview — note explicitly if using a preview API)
+- `CompletableFuture` timeout additions: `orTimeout()`, `completeOnTimeout()` (9)
+- `Future.state()` / `resultNow()` / `exceptionNow()` (19)
 
 **Other notable APIs**
-- `java.net.http.HttpClient` (11)
+- `java.net.http.HttpClient` (11), including `sendAsync()`
 - `String` methods: `isBlank()`, `strip()`, `repeat()`, `lines()` (11)
+- `String.transform()` / `indent()` (12), `formatted()` (15)
 - `Files.readString()` / `writeString()` (11)
+- `RandomGenerator` interface and factories (17), with `Math.clamp()` (21)
 
 ## Example Format Convention
 Keep a lightweight style:

@@ -31,12 +31,13 @@ same way stage ACs are.
       public API (e.g. football-data.org) and map them into the domain model —
       turns the HttpClient examples into something genuinely useful.
 
-## Java feature coverage (closing the 21 → 25 gap)
+## Java feature coverage
 
 The project's language target is Java 21 for now (see the hard rule in
 `CLAUDE.md`) — deliberately, to de-risk Groovy/Spock compatibility on the
-newest JDKs before committing to it. These are the headline additions between
-21 and 25, gated behind bumping the target:
+newest JDKs before committing to it. `FUTURE-04` through `FUTURE-10` are the
+headline additions between 21 and 25, gated behind bumping the target;
+`FUTURE-11`, `FUTURE-27`, and `FUTURE-28` need no bump:
 
 - [ ] `FUTURE-24` — **Bump language target to Java 25.** Once Groovy/Spock
       and Spring Boot's toolchain are confirmed compatible with JDK 25, raise
@@ -69,6 +70,19 @@ newest JDKs before committing to it. These are the headline additions between
 - [ ] `FUTURE-11` — **`qAnda` practice exercises.** The package is in the
       layout but no stage builds it — one exercise per topic package, written
       after the topic's stage lands so the exercises track real coverage.
+- [ ] `FUTURE-27` — **Small Java 9–21 API singles.** The leftovers after
+      stages 11–12 close out the headline 9–21 gaps — filler-grade
+      individually, but a themed grab-bag example (or `qAnda` exercises per
+      `FUTURE-11`) could sweep them up: `Arrays.mismatch()` (9),
+      `Objects.requireNonNullElse()` (9), `InputStream.transferTo()` (9),
+      `Optional.orElseThrow()` no-arg (10), `Path.of()` (11),
+      `Character.toString(int)` (11), `Files.mismatch()` (12), compact
+      number formatting (12).
+- [ ] `FUTURE-28` — **`HttpClient` WebSocket client (11).** The third face
+      of the Java 11 HTTP client after stage 10's synchronous GET and stage
+      12's `sendAsync()`. Needs a WebSocket endpoint to talk to, so pair it
+      with a small Spring WebSocket/STOMP addition to the `api/` layer —
+      e.g. streaming simulated match events from the stage-12 simulator.
 
 ## API layer
 
@@ -138,7 +152,8 @@ straight into stages 9, 5, and 10 respectively — see `STAGE-9-AC-03`,
       Package Layout or any stage. Promote if
       a dedicated `java.time` feature set is wanted; until then, date-range
       queries live wherever they naturally land (e.g. filtering `Match.date`
-      inside `streams/`).
+      inside `streams/` — stage 11's `LocalDate.datesUntil()` example lands
+      there per this note, and would be the seed content for this package).
 
 ## Tooling & quality
 
