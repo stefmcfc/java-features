@@ -13,7 +13,7 @@ giving `RUNBOOK.md` real operational content to document.
 ## Scope
 
 In: the Actuator and OpenTelemetry starters in `build.gradle.kts`,
-endpoint exposure in `application.properties`, and one small `@Async`
+endpoint exposure in `application.yml`, and one small `@Async`
 dataset query in `uk.co.stefirby.java.features.concurrency` showing
 observation context propagating onto the async thread. Exporting to a
 live OTLP collector is configuration-only — no collector is run in the
