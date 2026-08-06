@@ -23,7 +23,7 @@ once their spec passes.
 | 9 | [concurrency](stage-9-concurrency.md) | Complete |
 | 10 | [other-apis](stage-10-other-apis.md) | Complete |
 | 11 | [streams-part-2](stage-11-streams-part-2.md) | Complete |
-| 12 | [async-and-simulation](stage-12-async-and-simulation.md) | Not started |
+| 12 | [async-and-simulation](stage-12-async-and-simulation.md) | Complete |
 
 Stage 4 is pulled forward (ahead of Optional/Collections/language features) to
 match the spec's own "Next Steps": prove the Spring Boot 4.1 wiring end-to-end

@@ -81,6 +81,23 @@ Stage 11 added the remaining `streams/` examples (`CollectorsFlatMappingExample`
 `PredicateNotExample`, `LocalDateDatesUntilExample`) and the `collections/`
 defensive-copy example (`ImmutableCopyExample`).
 
+Stage 12 added `HttpClientSendAsyncExample` to `httpclient/`,
+`CompletableFutureTimeoutExample` and `FutureStateExample` to `concurrency/`,
+`StringTransformIndentFormattedExample` to `text_blocks/`, and a new
+`random/` package with `MatchweekSimulatorExample`. Like the stage-10 client
+examples, `HttpClientSendAsyncExample` needs a live instance of the app to
+call:
+
+```
+java -cp build/classes/java/main uk.co.stefirby.java.features.httpclient.HttpClientSendAsyncExample
+```
+
+The rest are pure JDK and run directly, e.g.:
+
+```
+java -cp build/classes/java/main uk.co.stefirby.java.features.random.MatchweekSimulatorExample
+```
+
 ## Running the Spring Boot API
 
 ```
@@ -144,6 +161,18 @@ The first delegates straight to
 `CollectorsFilteringExample.playersByPositionWithMinGoals()`; `minGoals`
 defaults to `0` when omitted, and a negative value responds 400 with an
 RFC 9457 `ProblemDetail` body.
+
+Stage 12 added `api.RandomController`:
+
+```
+GET /api/random/simulated-matchweek?seed=<n>
+```
+
+Delegates straight to `random.MatchweekSimulatorExample`. Given a `seed`, it
+responds 200 with that seed's simulated fixtures every time (deterministic
+replay); omit `seed` and the controller resolves one via
+`MatchweekSimulatorExample.randomSeed()` before simulating, returning it in
+the payload so the run can be reproduced later.
 
 springdoc-openapi is wired in alongside them, so the API is self-documenting:
 

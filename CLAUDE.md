@@ -27,8 +27,8 @@ Ideas deferred beyond the current stages: `specs/future-development.md`.
 - Package layout follows `uk.co.stefirby.java.features.<topic>` (one package per feature area:
   `streams`, `collections`, `records`, `sealed`, `pattern_matching`,
   `switch_expressions`, `text_blocks`, `var`, `optional`, `concurrency`,
-  `httpclient`, `data`, `api`, `qAnda`). See the spec for the full layout and
-  rationale.
+  `httpclient`, `random`, `data`, `api`, `qAnda`). See the spec for the full
+  layout and rationale.
 - Every example class exposes its feature logic as static methods, runnable
   from a `main` method and covered by a Spock spec; selected examples are also
   wired into a thin Spring controller in `api/` — controllers stay thin and
