@@ -36,6 +36,7 @@ uk.co.stefirby.java.features
 ├── optional/            // Optional additions
 ├── concurrency/         // Virtual threads, structured concurrency
 ├── httpclient/          // java.net.http.HttpClient
+├── random/              // RandomGenerator interface and factories, Math.clamp()
 ├── data/                // Shared Premier League domain model + in-memory dataset
 ├── api/                 // Spring Boot REST controllers exposing selected examples
 └── qAnda/               // Practice exercises, one per topic
@@ -69,9 +70,17 @@ defensive-copy example. The
 `GET /api/streams/players-by-position`; `OptionalController` (stage 5)
 exposes `GET /api/optional/team-top-scorer`; `RecordsController` (stage 7)
 exposes `GET /api/records/player/{id}`; `ConcurrencyController` (stage 9)
-exposes `GET /api/concurrency/thread-info`. Every handler delegates straight
-to a static method in the matching topic package. Only `qAnda/` still holds
-just a `package-info.java` scaffold.
+exposes `GET /api/concurrency/thread-info`; `RandomController` (stage 12)
+exposes `GET /api/random/simulated-matchweek`. Every handler delegates
+straight to a static method in the matching topic package. Only `qAnda/`
+still holds just a `package-info.java` scaffold.
+
+Stage 12 covers the asynchronous halves of APIs already in the project —
+`HttpClient.sendAsync()` in `httpclient/`, the `CompletableFuture` timeout
+additions and `Future` state inspectors in `concurrency/` — plus a new
+`random/` package hosting a `RandomGenerator`-driven, seeded matchweek
+simulator, and the remaining `String.transform()`/`indent()`/`formatted()`
+helpers co-located in `text_blocks/` alongside the stage-10 `String` methods.
 
 ## Running the Examples
 
@@ -138,6 +147,14 @@ Stage 11 adds:
   grouped by position, keeping only those with at least `minGoals` goals
   (defaults to `0`), via `Collectors.filtering()`; a negative `minGoals`
   responds 400 with an RFC 9457 `ProblemDetail` body
+
+Stage 12 adds:
+
+- `GET /api/random/simulated-matchweek?seed=<n>` — 200 with a simulated
+  matchweek of fixtures (including the seed) as JSON; the same seed always
+  reproduces the same fixtures. Omit `seed` and the API mints one itself via
+  `RandomGenerator.of(...)` and returns it in the payload, so any run can be
+  replayed by requesting that seed explicitly.
 
 ## Testing
 
@@ -274,6 +291,35 @@ the Java 11 `String`/`Files` helpers co-located in `text_blocks/`:
   JDK client — imperative JDK, fluent Spring, and declarative-interface
   styles side by side, each proven equivalent by its own spec.
 
+**Async and simulation (stage 12)** — the async halves of already-covered
+APIs, plus a new seeded-simulation package:
+
+- **`HttpClient.sendAsync()` (Java 11)** — `HttpClientSendAsyncExample`:
+  the non-blocking counterpart to stage 10's `HttpClientGetExample`,
+  returning a `CompletableFuture<Result>` immediately instead of blocking
+  the calling thread on `send()`.
+- **`CompletableFuture` timeout additions (Java 9)** —
+  `CompletableFutureTimeoutExample`: `orTimeout()` fails a deliberately slow
+  top-scorers query exceptionally with a `TimeoutException` once its
+  deadline passes; `completeOnTimeout()` falls back to a default value
+  instead; a query that finishes in time completes normally either way.
+- **`Future.state()` / `resultNow()` / `exceptionNow()` (Java 19)** —
+  `FutureStateExample`: reports `SUCCESS` with the result for a query that
+  succeeds and `FAILED` with the cause for one that throws, without
+  catching `ExecutionException` to unwrap it.
+- **`RandomGenerator` / `RandomGeneratorFactory` (Java 17)** —
+  `random.MatchweekSimulatorExample`: pairs the dataset's teams into a
+  matchweek and rolls a scoreline for each with a seeded generator
+  (`RandomGeneratorFactory.of(...).create(seed)`); the same seed always
+  reproduces the same fixtures, and every scoreline is clamped into a
+  plausible range with `Math.clamp()` (Java 21). An unseeded
+  `RandomGenerator.of(...)` mints a fresh seed when the caller doesn't
+  supply one (backs stage 12's `GET /api/random/simulated-matchweek`).
+- **`String.transform()` / `indent()` (Java 12) and `formatted()` (Java 15)**
+  — `StringTransformIndentFormattedExample`: an upper-cased club name, an
+  indented stadium line, and a `formatted()` founding-year summary combined
+  into one small club report over PL text data.
+
 **Other**
 
 - **Records (Java 16)** — `data.Player`, `data.Team`, and `data.Match`
@@ -315,6 +361,11 @@ HTTP, documented via springdoc-openapi:
   delegating straight to `ThreadInfoExample.currentThreadReport()`; with
   `spring.threads.virtual.enabled=true` the report proves the request was
   served on a virtual thread.
+- **`RandomController`** (stage 12) —
+  `GET /api/random/simulated-matchweek?seed=<n>`, delegating straight to
+  `random.MatchweekSimulatorExample`; an omitted `seed` is resolved via the
+  same package's `randomSeed()` before simulating, so no feature logic
+  lives in the controller.
 
 See `specs/modern-java-features-spec.md` for the full coverage list this
 project works towards.

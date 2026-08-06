@@ -66,6 +66,7 @@ uk.co.stefirby.java.features
 ├── optional/             // Optional additions (9-11): or(), ifPresentOrElse, isEmpty, stream()
 ├── concurrency/          // Virtual threads / Project Loom (21), structured concurrency (preview)
 ├── httpclient/           // java.net.http.HttpClient (11)
+├── random/               // RandomGenerator interface and factories (17), Math.clamp() (21)
 ├── data/                 // Shared Premier League domain model + in-memory dataset
 ├── api/                  // Spring Boot REST controllers exposing selected examples over HTTP
 └── qAnda/                // Practice exercises, one per topic
