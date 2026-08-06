@@ -57,6 +57,25 @@ java --enable-preview -cp "build/classes/java/preview;build/classes/java/main" u
 
 (Use `:` instead of `;` as the classpath separator on macOS/Linux.)
 
+Stage 10 added the `httpclient/` examples (`HttpClientGetExample`,
+`RestClientExample`, `HttpExchangeExample`) and the `text_blocks/` string
+helpers (`StringMethodsExample`, `FilesReadWriteStringExample`). The three
+client examples issue real HTTP calls to the app's stage-4 top-scorers
+endpoint, so start the API first (`./gradlew bootRun`) and run a client
+against it; each takes the base URI as an optional first argument,
+defaulting to `http://localhost:8080`. `HttpClientGetExample` is pure JDK
+and runs like the rest:
+
+```
+java -cp build/classes/java/main uk.co.stefirby.java.features.httpclient.HttpClientGetExample
+```
+
+`RestClientExample` and `HttpExchangeExample` need the Spring jars on the
+classpath, so run those two from the IDE (which uses Gradle's runtime
+classpath), or exercise all three via their Spock specs
+(`./gradlew test --tests "*httpclient*"`), which boot the app on a random
+port automatically.
+
 ## Running the Spring Boot API
 
 ```
@@ -150,6 +169,10 @@ production code stays preview-free.
   when running `StructuredConcurrencyExample`:** preview classfiles only
   load in a JVM started with `--enable-preview` — include the flag and the
   `build/classes/java/preview` classpath entry as shown above.
+- **`ConnectException` from a stage-10 client example's `main`:** the
+  client examples call a live instance of this app — start it first with
+  `./gradlew bootRun` (or pass the base URI of another running instance as
+  the first argument).
 
 ## Development Workflow
 
